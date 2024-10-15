@@ -1,0 +1,7 @@
+<h1>MCLAREN is the best formula 1 team in the world!</h1>
+
+<% if(viewData) { %>
+    <% for (const car of viewData) { %>
+        <h2><%= car.name %></h2>
+    <% } %>
+<% } %>
