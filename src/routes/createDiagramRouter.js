@@ -6,12 +6,12 @@
  */
 
 import express from 'express'
-import { HomeController } from '../controllers/homeController.js'
+import { CreateDiagramController } from '../controllers/creatDiagramController.js'
 import { ROUTER_PATH } from '../config/Paths.js'
 
 const router = express.Router()
 
-const controller = new HomeController()
+const controller = new CreateDiagramController()
 
 router.get(ROUTER_PATH.HOME, (req, res, next) => controller.index(req, res, next))
 

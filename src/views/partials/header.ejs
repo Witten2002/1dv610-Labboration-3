@@ -1,9 +1,12 @@
-<header>
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="navbar-logo">
-    </div>
-        <div class="navbar-nav">
-          <a class="nav-link" href="./">Home</a>
-        </div>
+<header class="w-full h-min custom-bg-333 flex flex-row justify-start items-center">
+  <nav class="flex flex-row justify-center items-center gap-10 px-5">
+    <h2 class="text-white">1dv610 - Labboration 3</h2>
+    <ul class="text-white flex flex-row justify-between items-center gap-10 px-5">
+      <% if (PATH) { %>
+        <li class="hover:text-yellow-200"><a href="<%= PATH.HOME %>">Home</a></li>
+        <li class="hover:text-yellow-200"><a href="<%= PATH.HORIZONTALBAR %>">Diagams</a></li>
+        <li class="hover:text-yellow-200"><a href="<%= PATH.CREATE_DIAGRAM %>">Create Driagram</a></li>
+      <% } %>
+    </ul>
   </nav>
 </header>

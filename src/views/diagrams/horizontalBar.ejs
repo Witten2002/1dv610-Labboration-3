@@ -1,0 +1,13 @@
+<div class="w-full h-max flex flex-col justify-center items-center">
+  <div class="w-full h-min py-3 bg-gray-800">
+    <ul class="text-white flex flex-row justify-center items-center gap-10 px-5">
+      <% if (PATH) { %>
+        <li class="hover:text-yellow-200"><a href="<%= PATH.HORIZONTALBAR %>">HORIZONTALBAR</a></li>
+        <li class="hover:text-yellow-200"><a href="<%= PATH.LINEDIAGRAM %>">LINEDIAGRAM</a></li>
+        <li class="hover:text-yellow-200"><a href="<%= PATH.CIRCLEDIAGRAM %>">CIRCLEDIAGRAM</a></li>
+      <% } %>
+    </ul>
+  </div>
+</div>
+
+<h1>HORIZONTALBAR</h1>

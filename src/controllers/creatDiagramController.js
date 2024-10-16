@@ -1,5 +1,5 @@
 /**
- * Controller for home route.
+ * Controller for createDiagram route.
  *
  * @author Ludwig Wittenberg <lw223cq@student.lnu.se>
  * @version 1.0.0
@@ -9,7 +9,7 @@ import { PATH, VIEWS } from '../config/Paths.js'
 /**
  * Encapsulates a controller.
  */
-export class HomeController {
+export class CreateDiagramController {
   /**
    * Renders a view and sends the rendered HTML string as an HTTP response.
    * index GET.
@@ -19,6 +19,6 @@ export class HomeController {
    * @param {Function} next - Express next middleware function.
    */
   index (req, res, next) {
-    res.render(VIEWS.HOME, { PATH })
+    res.render(VIEWS.CREATE_DIAGRAM, { PATH })
   }
 }

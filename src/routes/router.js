@@ -8,13 +8,17 @@
 import express from 'express'
 import http from 'node:http'
 import { router as homeRouter } from './homeRouter.js'
-import { router as carsRouter } from './carsRouter.js'
+import { router as diagramRouter } from './diagramsRouter.js'
+import { router as createDiagramRouter } from './createDiagramRouter.js'
+import { ROUTER_PATH } from '../config/Paths.js'
 
 const router = express.Router()
 
-router.use('/', homeRouter)
+router.use(ROUTER_PATH.HOME, homeRouter)
 
-router.use('/cars', carsRouter)
+router.use(ROUTER_PATH.DIAGRAMS, diagramRouter)
+
+router.use(ROUTER_PATH.CREATE_DIAGRAM, createDiagramRouter)
 
 // Catch 404 (ALWAYS keep this as the last route).
 router.use('*', (req, res, next) => {
