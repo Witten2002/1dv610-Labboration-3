@@ -21,7 +21,16 @@ export class DiagramController {
    * @param {Function} next - Express next middleware function.
    */
   async horizontalBar (req, res, next) {
-    const viewData = await this.#getData()
+    const unPrePairedData = await this.#getData()
+
+    const preparedData = await this.#prepareData(unPrePairedData)
+    const sendToView = {
+      data: preparedData
+    }
+
+    const viewData = JSON.stringify(sendToView)
+    console.log(sendToView)
+
     res.render(VIEWS.HORIZONTALBAR, { PATH, viewData })
   }
 
@@ -62,8 +71,57 @@ export class DiagramController {
       const statics = new Covid19Statics()
       await statics.fetchData()
       return statics.getData()
+
+      // this.#prepareData(data)
     } catch (error) {
       console.error(error)
     }
+  }
+
+  async #prepareData (dataa) {
+    const dataArray = []
+
+    for (const key in dataa) {
+      const data = { // change name
+        label: key.toString(),
+        value: this.#sum(dataa[key]),
+        color: this.#getRandomColor()
+      }
+
+      dataArray.push(data)
+    }
+    console.log(dataArray)
+    return dataArray
+  }
+
+  #sum (object) {
+    let sum = 0
+
+    const values = Object.values(object)
+
+    for (const value of values) {
+      sum += value
+    }
+
+    return sum
+  }
+
+  #getRandomColor () {
+    const random = this.#getRandomNumber()
+
+    return this.#getColor(random)
+  }
+
+  #getRandomNumber () {
+    return Math.floor(Math.random() * 20)
+  }
+
+  #getColor (index) {
+    const colors = [
+      'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black',
+      'cyan', 'magenta', 'lime', 'maroon', 'navy', 'olive', 'teal', 'violet', 'gold', 'silver'
+    ]
+
+    return colors[index]
   }
 }
