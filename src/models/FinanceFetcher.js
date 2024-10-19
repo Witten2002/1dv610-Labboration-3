@@ -8,7 +8,7 @@
 /**
  * A class to fetch and store COVID-19 historical data.
  */
-class Covid19Statics {
+class FinanceFetcher {
   #data
 
   /**
@@ -18,14 +18,16 @@ class Covid19Statics {
    * @throws {Error} If the fetch request fails.
    */
   async fetchData () {
-    const response = await fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=4')
+    const response = await fetch(`https://financialmodelingprep.com/api/v3/income-statement/NVDA?apikey=${process.env.API_KEY}`)
 
     if (!response.ok) {
       throw new Error('Failed to fetch')
     }
 
     const data = await response.json()
+
     this.#data = data
+    
   }
 
   /**
@@ -38,4 +40,4 @@ class Covid19Statics {
   }
 }
 
-export { Covid19Statics }
+export { FinanceFetcher }

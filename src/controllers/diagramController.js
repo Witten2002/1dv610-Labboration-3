@@ -6,7 +6,7 @@
  */
 
 import { PATH, VIEWS } from '../config/Paths.js'
-import { Covid19Statics } from '../models/Covid19Statics.js'
+import { FinanceFetcher } from '../models/FinanceFetcher.js'
 
 /**
  * Encapsulates a controller.
@@ -29,7 +29,6 @@ export class DiagramController {
     }
 
     const viewData = JSON.stringify(sendToView)
-    console.log(sendToView)
 
     res.render(VIEWS.HORIZONTALBAR, { PATH, viewData })
   }
@@ -68,60 +67,48 @@ export class DiagramController {
    */
   async #getData () {
     try {
-      const statics = new Covid19Statics()
-      await statics.fetchData()
-      return statics.getData()
-
-      // this.#prepareData(data)
+      const nvidiaStatics = new FinanceFetcher()
+      await nvidiaStatics.fetchData()
+      return nvidiaStatics.getData()
     } catch (error) {
       console.error(error)
     }
   }
 
-  async #prepareData (dataa) {
+  /**
+   * Prepares data for the diagram.
+   *
+   * @param {Array<object>} data - The raw data to be prepared.
+   * @returns {Array<object>} The prepared data array for the diagram.
+   */
+  async #prepareData (data) {
     const dataArray = []
+    const colors = ['red', 'blue', 'yellow', 'orange', 'green']
 
-    for (const key in dataa) {
-      const data = { // change name
-        label: key.toString(),
-        value: this.#sum(dataa[key]),
-        color: this.#getRandomColor()
+    for (let i = 0; i < data.length; i++) {
+      const diagramDataPoint = {
+        label: data[i].calendarYear,
+        value: this.#toBillions(data[i].revenue),
+        color: colors[i]
       }
 
-      dataArray.push(data)
-    }
-    console.log(dataArray)
-    return dataArray
-  }
-
-  #sum (object) {
-    let sum = 0
-
-    const values = Object.values(object)
-
-    for (const value of values) {
-      sum += value
+      dataArray.push(diagramDataPoint)
     }
 
-    return sum
+    return dataArray.reverse()
   }
 
-  #getRandomColor () {
-    const random = this.#getRandomNumber()
+  /**
+   * Will calculate the revenue into billions.
+   *
+   * @param {number} revenue The reveneu of the company per year.
+   * @returns {number} The revenue in billions.
+   */
+  #toBillions (revenue) {
+    const BILLION = 1000000000
 
-    return this.#getColor(random)
-  }
+    const reveneuInNewFormat = revenue / BILLION
 
-  #getRandomNumber () {
-    return Math.floor(Math.random() * 20)
-  }
-
-  #getColor (index) {
-    const colors = [
-      'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black',
-      'cyan', 'magenta', 'lime', 'maroon', 'navy', 'olive', 'teal', 'violet', 'gold', 'silver'
-    ]
-
-    return colors[index]
+    return reveneuInNewFormat
   }
 }
