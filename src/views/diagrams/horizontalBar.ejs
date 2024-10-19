@@ -8,11 +8,51 @@
       <% } %>
     </ul>
   </div>
+  
+  <div class="flex flex-col mx-10 2xl:mx-96 my-10">
+    <h1 class="text-4xl text-center font-bold">Nvidia</h1>
+    <div class="flex flex-row mx-10 2xl:mx-96 gap-10 my-10 md:flex-col">
+      <div class="flex flex-col mx-10 2xl:ml-48 gap-10">
+        <p>
+          Nvidia Corporation is an American multinational technology company, founded in 1993 by Jensen Huang, Chris Malachowsky, and Curtis Priem. It has since grown into one of the most prominent players in the world of computing, specifically in the development of graphics processing units (GPUs) and artificial intelligence (AI) technologies. Headquartered in Santa Clara, California, Nvidia is known for pushing the boundaries of what's possible in the realm of high-performance computing, gaming, professional visualization, and AI-driven applications.
+        </p>
 
+        <h1 class="text-2xl font-bold">GPU Technology and Gaming</h1>
+        <p>
+          Nvidia is perhaps best known for its GPU product lines, which are widely used in both consumer and professional markets. The companys GeForce series of GPUs has long been the gold standard for PC gaming, offering cutting-edge performance for gamers who demand high frame rates, high-definition graphics, and smooth gameplay. These GPUs power everything from casual gaming to competitive eSports, as well as virtual reality (VR) experiences.
+        </p>
 
-    <% if (viewData) { %>
-      <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.HORIZONTAL_BAR %>"></my-show-diagram>
-    <% } %>
+        <p>
+          Nvidias leadership in gaming goes beyond just hardware. Their software ecosystem includes technologies like DLSS (Deep Learning Super Sampling), which uses AI to upscale lower-resolution images into higher resolutions in real-time. This allows gamers to achieve better visual quality without compromising performance. Another key technology is RTX, which enables real-time ray tracing in games, simulating how light behaves in the real world to produce lifelike reflections, shadows, and lighting effects. Ray tracing, previously considered too computationally expensive for real-time use, is now a feature in many of todays most popular video games, thanks to Nvidias advancements.
+        </p>
+        
+        </div>
+
+      <% if (viewData && DIAGRAM_TYPES) { %>
+        <div class="flex flex-col justify-center items-center 2xl:mr-48"> 
+          <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.HORIZONTAL_BAR %>"></my-show-diagram>
+          <span class="text-gray-500 italic">Nvidias reveneu for the last 5 years. (Billions)</span>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="flex flex-col mx-10 2xl:mx-96 gap-10 my-10">
+      <div class="flex flex-col mx-10 2xl:mx-48 gap-10">
+        <h1 class="text-2xl font-bold">Expansion into Professional Markets</h1>
+        <p>
+          While Nvidias GPUs are central to gaming, the company has significantly expanded its influence in professional sectors as well. Quadro GPUs are designed for professionals working in fields like engineering, media production, architecture, and design. These GPUs are capable of rendering complex 3D models, animations, and simulations, making them essential tools for industries that rely on visual computing.
+        </p>
+
+        <p>
+          The Nvidia RTX A-series (formerly known as Quadro RTX) takes this a step further by incorporating AI features that accelerate workflows in industries like healthcare, scientific research, and media. For instance, in film production, Nvidia GPUs are often used to render special effects and animations, enabling studios to produce high-quality visuals at a faster rate.
+        </p>
+
+        <p>
+          Nvidia har vuxit från att vara ett företag som tillverkar grafikkort till att bli ett teknikföretag i framkant av innovation inom AI, maskininlärning och datavetenskap.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="./js/components/my-showDiagram/index.js"></script>

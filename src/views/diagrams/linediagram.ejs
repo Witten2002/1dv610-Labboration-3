@@ -8,10 +8,51 @@
       <% } %>
     </ul>
   </div>
+  
+  <div class="flex flex-col mx-10 2xl:mx-96 my-10">
+    <h1 class="text-4xl text-center font-bold">Nvidia</h1>
+    <div class="flex flex-row mx-10 2xl:mx-96 gap-10 my-10 md:flex-col">
+      <div class="flex flex-col mx-10 2xl:ml-48 gap-10">
+        <p>
+          Nvidia Corporation is an American multinational technology company, founded in 1993 by Jensen Huang, Chris Malachowsky, and Curtis Priem. It has since grown into one of the most prominent players in the world of computing, specifically in the development of graphics processing units (GPUs) and artificial intelligence (AI) technologies. Headquartered in Santa Clara, California, Nvidia is known for pushing the boundaries of what's possible in the realm of high-performance computing, gaming, professional visualization, and AI-driven applications.
+        </p>
 
-  <% if (viewData) { %>
-    <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.LINE_DIAGRAM %>"></my-show-diagram>
-  <% } %>
+        <h1 class="text-2xl font-bold">Data Center and High-Performance Computing</h1>
+        <p>
+          Nvidia has also made significant inroads into the data center market with its A100 and H100 GPUs, designed specifically for high-performance computing (HPC) and AI workloads. These GPUs are at the heart of supercomputers used for scientific research, weather modeling, pharmaceutical development, and more. The Nvidia HGX platform, which integrates multiple A100 GPUs, is used in large-scale AI training and deep learning applications, delivering massive computational power to handle vast datasets.
+        </p>
+
+        <p>
+          In 2020, Nvidia acquired Mellanox, a company specializing in high-performance networking, in a deal worth $6.9 billion. This acquisition strengthened Nvidias position in the data center market by enabling them to provide end-to-end computing solutions, from GPUs to networking hardware. Nvidias BlueField Data Processing Units (DPUs) have further bolstered their data center offerings by offloading certain tasks from CPUs, thereby improving efficiency and performance in cloud computing and AI environments.
+        </p>
+        
+        </div>
+
+      <% if (viewData && DIAGRAM_TYPES) { %>
+        <div class="flex flex-col justify-center items-center 2xl:mr-48"> 
+          <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.LINE_DIAGRAM %>"></my-show-diagram>
+          <span class="text-gray-500 italic">Nvidias reveneu for the last 5 years. (Billions)</span>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="flex flex-col mx-10 2xl:mx-96 gap-10 my-10">
+      <div class="flex flex-col mx-10 2xl:mx-48 gap-10">
+        <h1 class="text-2xl font-bold">Future Prospects: AI and the Metaverse</h1>
+        <p>
+          Nvidias vision for the future goes beyond gaming and professional graphics. They are actively working on technologies that will drive the development of the Metaverse—a collective virtual shared space that combines physical and digital realities. Their Omniverse platform allows for real-time collaboration across 3D worlds, making it possible for creators to build detailed virtual environments for entertainment, business, and industry.
+        </p>
+
+        <p>
+          In AI research, Nvidia is playing a critical role in advancing generative AI, which includes technologies like large language models and AI systems capable of creating complex visual, audio, and text content. As AI becomes more integrated into everyday life, Nvidias hardware and software ecosystems will continue to support the development of smarter and more capable AI systems. 
+        </p>
+
+        <p>
+          Nvidias DGX systems are dedicated AI supercomputers that enable organizations to run large-scale AI workloads. These systems are deployed in research institutions, data centers, and tech companies across the globe, driving advancements in AI research and innovation. Nvidia has also developed software tools like Nvidia TensorRT, a platform for high-performance deep learning inference, and Nvidia Clara, an AI platform designed for healthcare and life sciences.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="./js/components/my-showDiagram/index.js"></script>

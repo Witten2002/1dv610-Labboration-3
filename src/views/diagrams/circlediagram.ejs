@@ -8,10 +8,51 @@
       <% } %>
     </ul>
   </div>
+  
+  <div class="flex flex-col mx-10 2xl:mx-96 my-10">
+    <h1 class="text-4xl text-center font-bold">Nvidia</h1>
+    <div class="flex flex-row mx-10 2xl:mx-96 gap-10 my-10 md:flex-col">
+      <div class="flex flex-col mx-10 2xl:ml-48 gap-10">
+        <p>
+          Nvidia Corporation is an American multinational technology company, founded in 1993 by Jensen Huang, Chris Malachowsky, and Curtis Priem. It has since grown into one of the most prominent players in the world of computing, specifically in the development of graphics processing units (GPUs) and artificial intelligence (AI) technologies. Headquartered in Santa Clara, California, Nvidia is known for pushing the boundaries of what's possible in the realm of high-performance computing, gaming, professional visualization, and AI-driven applications.
+        </p>
 
-  <% if (viewData) { %>
-    <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.CIRCLE_DIAGRAM %>"></my-show-diagram>
-  <% } %>
+        <h1 class="text-2xl font-bold">AI and Autonomous Vehicles</h1>
+        <p>
+          One of the most exciting applications of Nvidias AI technology is in the field of autonomous driving. Nvidias Drive platform provides a full-stack solution for automakers to develop self-driving cars. This includes everything from AI-powered perception (allowing the vehicle to "see" and understand its environment) to planning and control systems that enable the vehicle to make decisions and navigate roads safely.
+        </p>
+
+        <p>
+          Nvidias partnerships with leading automotive companies have made its technology central to the development of next-generation autonomous vehicles. Their AI solutions help cars learn from vast amounts of data, improving their ability to react to complex driving conditions, detect objects, and make decisions in real-time. As autonomous vehicle technology continues to evolve, Nvidia's role in this space is expected to expand, making it a key player in shaping the future of transportation.
+        </p>
+        
+        </div>
+
+      <% if (viewData && DIAGRAM_TYPES) { %>
+        <div class="flex flex-col justify-center items-center 2xl:mr-48"> 
+          <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.CIRCLE_DIAGRAM %>"></my-show-diagram>
+          <span class="text-gray-500 italic">Nvidias reveneu for the last 5 years. (Billions)</span>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="flex flex-col mx-10 2xl:mx-96 gap-10 my-10">
+      <div class="flex flex-col mx-10 2xl:mx-48 gap-10">
+        <h1 class="text-2xl font-bold">Nvidia and Artificial Intelligence</h1>
+        <p>
+          In recent years, Nvidia has shifted its focus to become a leader in artificial intelligence (AI) and machine learning (ML). Their GPUs are highly efficient at performing the parallel computations required for deep learning, a subset of AI that powers advancements in areas such as natural language processing, image recognition, and autonomous systems.
+        </p>
+
+        <p>
+          Nvidias CUDA (Compute Unified Device Architecture), introduced in 2006, allows developers to harness the power of GPUs for general-purpose computing tasks beyond just graphics. CUDA revolutionized fields like AI, data science, and scientific research by enabling high-performance parallel processing. CUDA-compatible GPUs are now used by developers worldwide to train machine learning models, run simulations, and perform complex data analysis tasks.
+        </p>
+
+        <p>
+          Nvidias DGX systems are dedicated AI supercomputers that enable organizations to run large-scale AI workloads. These systems are deployed in research institutions, data centers, and tech companies across the globe, driving advancements in AI research and innovation. Nvidia has also developed software tools like Nvidia TensorRT, a platform for high-performance deep learning inference, and Nvidia Clara, an AI platform designed for healthcare and life sciences.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="./js/components/my-showDiagram/index.js"></script>
