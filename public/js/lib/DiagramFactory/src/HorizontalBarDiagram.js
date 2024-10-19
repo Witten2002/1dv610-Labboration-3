@@ -5,7 +5,6 @@
  * @version 1.0.0
  */
 
-// import { GraphDiagram } from './GraphDiagram.js'
 import { GraphDiagram } from './GraphDiagram.js'
 import { diagramTypes } from './config/DiagramTypes.js'
 
@@ -39,19 +38,32 @@ class HorizontalBarDiagram extends GraphDiagram {
     const xCoodinates = []
 
     const visualData = super.getVisualData()
+    const MARGIN_TOP = 50
+    const MARGIN_LEFT = 50
+    const MARGIN_BOTTOM = 30
+
     for (let i = 0; i < visualData.length; i++) {
-      const barHeigth = (visualData[i].value / maxDataValue) * (svgHeight - 50)
-      const xCoordinate = i * (barWidth + barSpacing) + 50
+      const barHeigth = (visualData[i].value / maxDataValue) * (svgHeight - MARGIN_TOP)
+      const xCoordinate = i * (barWidth + barSpacing) + MARGIN_LEFT
       xCoodinates.push(xCoordinate)
-      const yCoordinate = svgHeight - barHeigth - 30
+      const yCoordinate = svgHeight - barHeigth - MARGIN_BOTTOM
 
-      const rect = this.#createBar(xCoordinate, yCoordinate, barWidth, barHeigth, visualData[i].color)
+      const config = {
+        xCoordinate,
+        yCoordinate,
+        barWidth,
+        barHeigth,
+        svgHeight,
+        visualData: visualData[i]
+      }
 
-      this.#createInteractivity(rect, barHeigth, yCoordinate, visualData[i])
+      const rect = this.#createBar(config)
+
+      this.#createInteractivity(rect, config)
 
       svg.appendChild(rect)
 
-      const text = this.#createLabel(xCoordinate, barWidth, svgHeight, visualData[i].label)
+      const text = this.#createLabel(config)
 
       svg.appendChild(text)
     }
@@ -60,20 +72,16 @@ class HorizontalBarDiagram extends GraphDiagram {
   /**
    * Creates an SVG rect element to represent a bar in the horizontal bar diagram.
    *
-   * @param {number} xCoordinate - The x-coordinate for the rect element.
-   * @param {number} yCoordinate - The y-coordinate for the rect element.
-   * @param {number} barWidth - The width of the bar.
-   * @param {number} barHeigth - The height of the bar.
-   * @param {string} color - The fill color of the bar.
+   * @param {object} config - The data structure.
    * @returns {SVGRectElement} The created SVG rect element representing the bar.
    */
-  #createBar (xCoordinate, yCoordinate, barWidth, barHeigth, color) {
+  #createBar (config) {
     const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
-    rect.setAttribute('x', xCoordinate)
-    rect.setAttribute('y', yCoordinate)
-    rect.setAttribute('width', barWidth)
-    rect.setAttribute('height', barHeigth)
-    rect.setAttribute('fill', color)
+    rect.setAttribute('x', config.xCoordinate)
+    rect.setAttribute('y', config.yCoordinate)
+    rect.setAttribute('width', config.barWidth)
+    rect.setAttribute('height', config.barHeigth)
+    rect.setAttribute('fill', config.visualData.color)
 
     return rect
   }
@@ -82,16 +90,14 @@ class HorizontalBarDiagram extends GraphDiagram {
    * Applies interactivity and animation settings to a given rect element.
    *
    * @param {SVGRectElement} rect - The SVG rect element to apply settings to.
-   * @param {number} barHeigth - The height of the bar.
-   * @param {number} yCoordinate - The y-coordinate of the rect element.
-   * @param {object} visualData - The visual data associated with the rect element.
+   * @param {object} config - The data structure.
    */
-  #createInteractivity (rect, barHeigth, yCoordinate, visualData) {
+  #createInteractivity (rect, config) {
     const interactivityAndAnimationSettings = {
       element: rect,
-      finalHeight: barHeigth,
-      finalYCoordinate: yCoordinate,
-      visualData,
+      finalHeight: config.barHeigth,
+      finalYCoordinate: config.yCoordinate,
+      visualData: config.visualData,
       type: diagramTypes.HORIZONTAL_BAR
     }
     super.applyInteractivityAndAnimation(interactivityAndAnimationSettings)
@@ -100,20 +106,19 @@ class HorizontalBarDiagram extends GraphDiagram {
   /**
    * Creates an SVG text element to display a label for a horizontal bar.
    *
-   * @param {number} xCoordinate - The x-coordinate for the text element.
-   * @param {number} barWidth - The width of the bar.
-   * @param {number} svgHeight - The height of the SVG element.
-   * @param {string} label - The text content to display.
-   * @returns {SVGTextElement} The created SVG text element displaying the label.
+   * @param {object} config - The data structure.
    */
-  #createLabel (xCoordinate, barWidth, svgHeight, label) {
+  #createLabel (config) {
+    const MARGINS_RIGHT = 2
+    const MARGIN_BOTTOM = 10
+
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-    text.setAttribute('x', xCoordinate + barWidth / 2)
-    text.setAttribute('y', svgHeight - 10)
+    text.setAttribute('x', config.xCoordinate + config.barWidth / MARGINS_RIGHT)
+    text.setAttribute('y', config.svgHeight - MARGIN_BOTTOM)
     text.setAttribute('fill', 'black')
     text.setAttribute('text-anchor', 'middle')
     text.setAttribute('font-size', this.#dataObject.config.fonts.xAxel)
-    text.textContent = label
+    text.textContent = config.visualData.label
 
     return text
   }

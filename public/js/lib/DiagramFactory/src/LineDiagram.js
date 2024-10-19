@@ -34,23 +34,28 @@ class LineDiagram extends GraphDiagram {
     const svgHeight = super.getSvgHeight()
     const visualData = super.getVisualData()
 
-    const points = this.#createPoints(svgHeight, visualData)
+    const config = {
+      svgHeight,
+      visualData,
+      svg
+    }
+
+    const points = this.#createPoints(config)
 
     const polyline = this.#createPolyline(points)
 
     svg.appendChild(polyline)
 
-    this.#createSmallCircles(points, svg, svgHeight, visualData)
+    this.#createSmallCircles(points, config)
   }
 
   /**
    * Creates an array of points for a line diagram based on the given visual data.
    *
-   * @param {number} svgHeight - The height of the SVG element.
-   * @param {Array<object>} visualData - The visual data array, where each object contains a `value` property.
+   * @param {object} config - The data structure.
    * @returns {Array<string>} An array of points in the format "x,y" for the line diagram.
    */
-  #createPoints (svgHeight, visualData) {
+  #createPoints (config) {
     let yCoordinate
     let xCoordinate
     const svgWidth = super.getSvgWidth()
@@ -58,9 +63,14 @@ class LineDiagram extends GraphDiagram {
 
     const points = []
 
-    for (let i = 0; i < visualData.length; i++) {
-      xCoordinate = (i / visualData.length) * (svgWidth - 100) + 75
-      yCoordinate = svgHeight - (visualData[i].value / maxDataValue) * (svgHeight - 50) - 30
+    const PADDING_X = 100
+    const MARGIN_LEFT = 75
+    const PADDING_Y = 50
+    const MARGIN_BOTTOM = 30
+
+    for (let i = 0; i < config.visualData.length; i++) {
+      xCoordinate = (i / config.visualData.length) * (svgWidth - PADDING_X) + MARGIN_LEFT
+      yCoordinate = config.svgHeight - (config.visualData[i].value / maxDataValue) * (config.svgHeight - PADDING_Y) - MARGIN_BOTTOM
       points.push(`${xCoordinate},${yCoordinate}`)
     }
 
@@ -74,11 +84,13 @@ class LineDiagram extends GraphDiagram {
    * @returns {SVGPolylineElement} The created SVG polyline element.
    */
   #createPolyline (points) {
+    const SIZE = '2'
+
     const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline')
     polyline.setAttribute('points', points)
     polyline.setAttribute('fill', 'none')
     polyline.setAttribute('stroke', this.#dataObject.visualData[0].color)
-    polyline.setAttribute('stroke-width', '2')
+    polyline.setAttribute('stroke-width', SIZE)
 
     return polyline
   }
@@ -87,23 +99,21 @@ class LineDiagram extends GraphDiagram {
    * Creates small circles at specified points, adds labels, and applies interactivity.
    *
    * @param {Array<string>} points - An array of points in the format "x,y".
-   * @param {SVGSVGElement} svg - The SVG element to append the circles and labels to.
-   * @param {number} svgHeight - The height of the SVG element.
-   * @param {Array<object>} visualData - The visual data array, where each object contains a `label` property.
+   * @param {object} config - The data structure.
    */
-  #createSmallCircles (points, svg, svgHeight, visualData) {
+  #createSmallCircles (points, config) {
     for (let i = 0; i < points.length; i++) {
       const coords = points[i].split(',')
       const xCoord = coords[0]
       const yCoord = coords[1]
 
-      this.#createLabel(xCoord, svgHeight, this.#visualData[i].label, svg)
+      this.#createLabel(xCoord, config, config.visualData[i].label,)
 
       const circle = this.#createCircle(xCoord, yCoord)
 
-      svg.appendChild(circle)
+      config.svg.appendChild(circle)
 
-      this.#createInteractivity(circle, visualData[i])
+      this.#createInteractivity(circle, config.visualData[i])
     }
   }
 
@@ -111,20 +121,21 @@ class LineDiagram extends GraphDiagram {
    * Creates an SVG text element to display a label at the specified coordinates and appends it to the given SVG element.
    *
    * @param {number} xCoord - The x-coordinate for the text element.
-   * @param {number} svgHeight - The height of the SVG element.
+   * @param {object} config - The data structure.
    * @param {string} label - The text content to display.
-   * @param {SVGSVGElement} svg - The SVG element to append the text element to.
    */
-  #createLabel (xCoord, svgHeight, label, svg) {
+  #createLabel (xCoord, config, label) {
+    const PADDING_BOTTOM = 10
+
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
     text.setAttribute('x', xCoord)
-    text.setAttribute('y', svgHeight - 10)
+    text.setAttribute('y', config.svgHeight - PADDING_BOTTOM)
     text.setAttribute('fill', 'black')
     text.setAttribute('text-anchor', 'middle')
     text.setAttribute('font-size', this.#dataObject.config.fonts.xAxel)
     text.textContent = label
 
-    svg.appendChild(text)
+    config.svg.appendChild(text)
   }
 
   /**
@@ -135,10 +146,12 @@ class LineDiagram extends GraphDiagram {
    * @returns {SVGCircleElement} The created SVG circle element.
    */
   #createCircle (xCoord, yCoord) {
+    const RADIUS = 4
+
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
     circle.setAttribute('cx', xCoord)
     circle.setAttribute('cy', yCoord)
-    circle.setAttribute('r', 4)
+    circle.setAttribute('r', RADIUS)
     circle.setAttribute('fill', this.#dataObject.visualData[0].color)
 
     return circle

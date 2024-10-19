@@ -22,6 +22,7 @@ class DataObject {
   #xAxelFontSize
   #barSpacing
   #showGrid
+  #shadowRoot
 
   /**
    * Creates an instance of CreateData. This will create and validate the config.
@@ -33,6 +34,7 @@ class DataObject {
 
     /* --------- VALIDATE --------- */
     this.#setElementId(config.elementId)
+    this.#setShadowRoot(config.shadowRoot)
     this.#setHeight(config.height)
     this.#setWidth(config.width)
     this.#setData(config.data)
@@ -48,6 +50,10 @@ class DataObject {
 
     // This must be done last
     this.#createObject()
+  }
+
+  #setShadowRoot (shadowRoot) {
+    this.#shadowRoot = shadowRoot
   }
 
   /**
@@ -85,7 +91,7 @@ class DataObject {
    */
   #setShowGrid (decoration) {
     if (decoration !== undefined) {
-      if (decoration.showGrid !== undefined && this.#isBoolean(decoration.showGrid)) {
+      if (this.#isValidShowGridDecoration(decoration.showGrid)) {
         throw new Error('showGrid must be a boolean')
       }
 
@@ -93,6 +99,10 @@ class DataObject {
     } else {
       this.#showGrid = true
     }
+  }
+
+  #isValidShowGridDecoration (showGrid) {
+    return showGrid !== undefined && this.#isBoolean(showGrid)
   }
 
   /**
@@ -158,10 +168,12 @@ class DataObject {
   #setSvg (elementId) {
     this.#svg = document.querySelector(elementId)
 
-    // PROBLEM HERE. We want to enter the shadowRoot and not the document...
+    if (!this.#svg) {
+      this.#svg = this.#shadowRoot.querySelector(elementId)
+    }
 
-    if (!this.#setSvg) {
-      throw new Error('The elementId does not exist')
+    if (!this.#svg) {
+      throw new Error('No element found.')
     }
   }
 
@@ -185,6 +197,7 @@ class DataObject {
     if (!animation) {
       this.#animation = false
     } else {
+      const DEFAULT_SPEED = 100
       let speed = 0
 
       if (animation.speed) {
@@ -194,7 +207,7 @@ class DataObject {
 
         speed = animation.speed
       } else {
-        speed = 100
+        speed = DEFAULT_SPEED
       }
 
       this.#animation = {
@@ -223,11 +236,11 @@ class DataObject {
       this.#interactivity = {
         expand: {
           // check if the user want hover effect on the bars
-          show: interactivity.expand ? interactivity.expand : false
+          show: interactivity.expand || false
         },
         infoBoxWhenHover: {
           // check if the user want to add a little information about the bars when the mouse is over them
-          show: interactivity.infoBoxWhenHover ? interactivity.infoBoxWhenHover : false
+          show: interactivity.infoBoxWhenHover || false
         }
       }
     }
@@ -270,7 +283,11 @@ class DataObject {
    * @returns {boolean} if value exist or not.
    */
   #validDataValue (data) {
-    return data.value === null || data.value === undefined || data.value === ''
+    return this.#isNull(data.value) || this.#isUndefined(data.value) || data.value === ''
+  }
+
+  #isNull (element) {
+    return element === null
   }
 
   /**
@@ -290,14 +307,17 @@ class DataObject {
    * @param {string} elementId - The element id that will be used to render the diagram.
    */
   #setElementId (elementId) {
-    console.log(elementId)
-    if (elementId === undefined) {
+    if (this.#isUndefined(elementId)) {
       throw new Error('The element is not provided.')
     } else if (this.#isString(elementId) || !elementId.startsWith('#')) {
       throw new Error('Could not find the element in the DOM.')
     } else {
       this.#elementId = elementId
     }
+  }
+
+  #isUndefined (element) {
+    return element === undefined
   }
 
   /**
@@ -344,6 +364,7 @@ class DataObject {
     this.#dataObject = {
       config: {
         elementId: this.#elementId,
+        shadowRoot: this.#shadowRoot,
         height: this.#height,
         width: this.#width,
         interactivity: this.#interactivity,

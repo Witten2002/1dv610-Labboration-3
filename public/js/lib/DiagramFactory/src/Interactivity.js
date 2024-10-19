@@ -6,7 +6,6 @@
  */
 
 import { diagramElements } from './config/DiagramTypes.js'
-import { ATTRIBUTE } from './config/Attribute.js'
 
 /**
  * A class representing a interactivity.
@@ -32,13 +31,12 @@ class Interactivity {
    */
   constructor (element) {
     this.#element = element
-    // maybe need to redo this? Sträng beroende
-    this.#originalHeight = parseInt(this.#element.getAttribute(ATTRIBUTE.HEIGHT))
-    this.#originalWidth = parseInt(this.#element.getAttribute(ATTRIBUTE.WIDTH))
+    this.#originalHeight = parseInt(this.#element.getAttribute('height'))
+    this.#originalWidth = parseInt(this.#element.getAttribute('width'))
 
-    this.#originalX = parseInt(this.#element.getAttribute(ATTRIBUTE.XAXEL))
-    this.#originalY = parseInt(this.#element.getAttribute(ATTRIBUTE.YAXEL))
-    this.#orginalRadius = parseInt(this.#element.getAttribute(ATTRIBUTE.RADIE))
+    this.#originalX = parseInt(this.#element.getAttribute('x'))
+    this.#originalY = parseInt(this.#element.getAttribute('y'))
+    this.#orginalRadius = parseInt(this.#element.getAttribute('r'))
   }
 
   /**
@@ -48,15 +46,15 @@ class Interactivity {
    * @param {object} visualData - The index of the bars.
    * @param {string} type - The type of the diagram.
    */
-  makeInteractive (dataObject, visualData, type) {
+  makeInteractive (dataObject, config) {
     // currently not working with circle/path diagrams
-    if (dataObject.config.interactivity.expand.show && this.#isCircle(type)) {
+    if (dataObject.config.interactivity.expand.show && !this.#isCircle(config.type)) {
       this.#reactToMouseOver(dataObject.config.interactivity.expand.show)
     }
 
     if (dataObject.config.interactivity.infoBoxWhenHover.show) {
       this.#createInfoBox()
-      this.#showInfoBoxWhenHover(visualData.label, visualData.value)
+      this.#showInfoBoxWhenHover(config.visualData.label, config.visualData.value)
     }
   }
 
@@ -67,7 +65,7 @@ class Interactivity {
    * @returns {boolean} - Returns true if the type is not a circle, otherwise false.
    */
   #isCircle (type) {
-    return type !== diagramElements.CIRCLE
+    return type === diagramElements.CIRCLE
   }
 
   /**
@@ -116,11 +114,14 @@ class Interactivity {
    * @param {Event} event - The event object triggered by the interaction.
    */
   #makeHorizontalBarInteractivity (event) {
+    const GROW = 10
+    const POSITION = 5
+  
     event.target.style.transition = 'width 0.5s ease, height 0.5s ease, x 0.5s ease, y 0.5s ease'
-    event.target.setAttribute(ATTRIBUTE.WIDTH, this.#originalWidth + 10)
-    event.target.setAttribute(ATTRIBUTE.HEIGHT, this.#originalHeight + 10)
-    event.target.setAttribute(ATTRIBUTE.XAXEL, this.#originalX - 5)
-    event.target.setAttribute(ATTRIBUTE.YAXEL, this.#originalY - 5)
+    event.target.setAttribute('width', this.#originalWidth + GROW)
+    event.target.setAttribute('height', this.#originalHeight + GROW)
+    event.target.setAttribute('x', this.#originalX - POSITION)
+    event.target.setAttribute('y', this.#originalY - POSITION)
   }
 
   /**
@@ -129,8 +130,10 @@ class Interactivity {
    * @param {Event} event - The event object triggered by the interaction.
    */
   #makeCircleInteractive (event) {
+    const GROW = 3
+
     event.target.style.transition = 'r 0.5s ease'
-    event.target.setAttribute(ATTRIBUTE.RADIE, this.#orginalRadius + 3)
+    event.target.setAttribute('r', this.#orginalRadius + GROW)
   }
 
   /**
@@ -139,10 +142,10 @@ class Interactivity {
    * @param {Event} event - The event object triggered by the interaction.
    */
   #resetHorizontalBar (event) {
-    event.target.setAttribute(ATTRIBUTE.WIDTH, this.#originalWidth)
-    event.target.setAttribute(ATTRIBUTE.HEIGHT, this.#originalHeight)
-    event.target.setAttribute(ATTRIBUTE.XAXEL, this.#originalX)
-    event.target.setAttribute(ATTRIBUTE.YAXEL, this.#originalY)
+    event.target.setAttribute('width', this.#originalWidth)
+    event.target.setAttribute('height', this.#originalHeight)
+    event.target.setAttribute('x', this.#originalX)
+    event.target.setAttribute('y', this.#originalY)
   }
 
   /**
@@ -151,7 +154,7 @@ class Interactivity {
    * @param {Event} event - The event object triggered by the interaction.
    */
   #resetCircle (event) {
-    event.target.setAttribute(ATTRIBUTE.RADIE, this.#orginalRadius)
+    event.target.setAttribute('r', this.#orginalRadius)
   }
 
   /**
@@ -197,8 +200,10 @@ class Interactivity {
    * @param {MouseEvent} event - The mouse event object triggered by the interaction.
    */
   #moveInfoBox (event) {
-    this.#infoBox.style.top = `${event.clientY + 10}px`
-    this.#infoBox.style.left = `${event.clientX + 10}px`
+    const MOVE = 10
+
+    this.#infoBox.style.top = `${event.clientY + MOVE}px`
+    this.#infoBox.style.left = `${event.clientX + MOVE}px`
   }
 
   /**

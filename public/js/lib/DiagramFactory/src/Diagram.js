@@ -7,7 +7,6 @@
 import { DataObject } from './DataObject.js'
 import { Interactivity } from './Interactivity.js'
 import { Animation } from './Animation.js'
-import { ATTRIBUTE } from './config/Attribute.js'
 /**
  * A class representing a diagram.
  */
@@ -35,7 +34,6 @@ class Diagram {
    */
   #setSvg (svg) {
     this.#svg = svg
-    console.log(svg)
   }
 
   /**
@@ -45,8 +43,7 @@ class Diagram {
    */
   #setsvgHeight (height) {
     this.#svgHeight = height
-    console.log(this.#svg)
-    this.#svg.setAttribute(ATTRIBUTE.HEIGHT, this.#svgHeight)
+    this.#svg.setAttribute('height', this.#svgHeight)
   }
 
   /**
@@ -65,7 +62,7 @@ class Diagram {
    */
   #setsvgWidth (width) {
     this.#svgWidth = width
-    this.#svg.setAttribute(ATTRIBUTE.WIDTH, this.#svgWidth)
+    this.#svg.setAttribute('width', this.#svgWidth)
   }
 
   /**
@@ -123,23 +120,15 @@ class Diagram {
 
     if (objectData.config.interactivity) {
       const interactive = new Interactivity(config.element)
-      interactive.makeInteractive(objectData, config.visualData, config.type)
+      interactive.makeInteractive(objectData, config)
     }
 
     if (objectData.config.animation) {
-      // maybe redo this so we send in the config in the contreuctor??
       const animate = new Animation(config.element)
 
-      const animationConfig = {
-        element: config.element,
-        type: config.type,
-        finalHeight: config.finalHeight,
-        finalYCoordinate: config.finalYCoordinate,
-        speed: objectData.config.animation.speed,
-        initialPoints: config.initialPoints,
-        finalPoints: config.finalPoints
-      }
-      animate.startAnimation(animationConfig)
+      const speed = objectData.config.animation.speed
+    
+      animate.startAnimation(config, speed)
     }
   }
 

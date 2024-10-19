@@ -7,9 +7,8 @@
 
 import { template } from './my-showDiagram-template.js'
 import { DiagramFactory } from '../../lib/DiagramFactory/DiagramFactory.js'
-
-// I dont really want to do this. ASK Daniel
-const ATTRIBUTE_DATA = 'data'
+import { DIAGRAM_TYPES } from './config/DiagramTypes.js'
+import { ATTRIBUTES } from './config/Attributes.js'
 
 /**
  * A custom HTML element for displaying a diagram.
@@ -36,7 +35,7 @@ customElements.define('my-show-diagram',
      * @returns {string[]} The list of attributes to be observed.
      */
     static get observedAttributes () {
-      return [ATTRIBUTE_DATA]
+      return [ATTRIBUTES.DATA, ATTRIBUTES.TYPE]
     }
 
     /**
@@ -47,10 +46,13 @@ customElements.define('my-show-diagram',
      * @param {string} newValue - The new value of the attribute.
      */
     attributeChangedCallback (name, oldValue, newValue) {
-      if (name === ATTRIBUTE_DATA && oldValue !== newValue) {
+      
+      console.log(name)
+      if (name === ATTRIBUTES.DATA && oldValue !== newValue) {
         this.#data = JSON.parse(newValue)
-        console.log(this.#data.data[0].value)
         this.#createDiagram()
+      } else if (name === ATTRIBUTES.TYPE && oldValue !== newValue) {
+        this.#renderDiagram(newValue)
       }
     }
 
@@ -62,16 +64,26 @@ customElements.define('my-show-diagram',
     #createConfig () {
       this.#diagramFactory = new DiagramFactory({
         elementId: '#svgDiagram',
+        shadowRoot: this.shadowRoot,
         height: 400,
         width: 600,
         data: this.#data.data
       })
-
-      this.#diagramFactory.displayBarDiagram()
     }
 
-    #renderDiagram () {
-      // set what diagram to render
+    /**
+     * Will choose the correct diagram.
+     * 
+     * @param {string} type - What type of diagram we want to display. 
+     */
+    #renderDiagram (type) {
+      if (type === DIAGRAM_TYPES.HORIZONTAL_BAR) {
+        this.#diagramFactory.displayBarDiagram()
+      } else if (type === DIAGRAM_TYPES.CIRCLE_DIAGRAM) {
+        this.#diagramFactory.displayCircleDiagram()
+      } else if (type === DIAGRAM_TYPES.LINE_DIAGRAM) {
+        this.#diagramFactory.displayLineDiagram()
+      }
     }
   }
 )

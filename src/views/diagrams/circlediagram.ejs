@@ -8,6 +8,10 @@
       <% } %>
     </ul>
   </div>
+
+  <% if (viewData) { %>
+    <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.CIRCLE_DIAGRAM %>"></my-show-diagram>
+  <% } %>
 </div>
 
-<h1>CIRCLEDIAGRAM</h1>
+<script type="module" src="./js/components/my-showDiagram/index.js"></script>

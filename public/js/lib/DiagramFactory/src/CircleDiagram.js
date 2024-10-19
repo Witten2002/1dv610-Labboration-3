@@ -55,14 +55,17 @@ class CircleDiagram extends Diagram {
    * @param {SVGSVGElement} svg - The SVG element to append the path elements to.
    */
   #createEachPath (svgWidth, svgHeight, svg) {
-    const radius = Math.min(svgWidth, svgHeight) / 2 - 50
-    const centerX = svgWidth / 2
-    const centerY = svgHeight / 2
+    const DIVIDED = 2
+
+    const radius = Math.min(svgWidth, svgHeight) / DIVIDED
+    const centerX = svgWidth / DIVIDED
+    const centerY = svgHeight / DIVIDED
 
     let startAngle = 0
 
     for (let i = 0; i < this.#eachAngles.length; i++) {
-      const endAngle = startAngle + this.#eachAngles[i] * Math.PI / 180
+      const RADIUS_TRIANGLE = 180
+      const endAngle = startAngle + this.#eachAngles[i] * Math.PI / RADIUS_TRIANGLE
 
       /* ---------------- Each Section Coords ---------------- */
       const x1 = centerX + radius * Math.cos(startAngle)
@@ -131,37 +134,43 @@ class CircleDiagram extends Diagram {
     const xCoord = 10
     let yCoord = 10
 
+    const coords = {
+      xCoord,
+      yCoord
+    }
+
     for (let i = 0; i < this.#visualData.length; i++) {
-      const rect = this.#createRect(xCoord, yCoord, this.#visualData[i].color)
+      const rect = this.#createRect(coords, this.#visualData[i].color)
 
       svg.appendChild(rect)
 
-      const textPercent = this.#createPercentLabel(xCoord, yCoord, this.#eachPrecents[i])
+      const textPercent = this.#createPercentLabel(coords, this.#eachPrecents[i])
 
       svg.appendChild(textPercent)
 
-      const text = this.#createTextLabel(xCoord, yCoord, this.#visualData[i].label)
+      const text = this.#createTextLabel(coords, this.#visualData[i].label)
 
       svg.appendChild(text)
 
-      yCoord += 15
+      coords.yCoord += 15
     }
   }
 
   /**
    * Creates an SVG rect element with the given coordinates and color.
    *
-   * @param {number} xCoord - The x-coordinate of the rect.
-   * @param {number} yCoord - The y-coordinate of the rect.
+   * @param {object} coords - The coordinates.
    * @param {string} color - The fill color of the rect.
    * @returns {SVGRectElement} The created SVG rect element.
    */
-  #createRect (xCoord, yCoord, color) {
+  #createRect (coords, color) {
+    const SIZE = 10
+
     const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
-    rect.setAttribute('x', xCoord)
-    rect.setAttribute('y', yCoord)
-    rect.setAttribute('width', 10)
-    rect.setAttribute('height', 10)
+    rect.setAttribute('x', coords.xCoord)
+    rect.setAttribute('y', coords.yCoord)
+    rect.setAttribute('width', SIZE)
+    rect.setAttribute('height', SIZE)
     rect.setAttribute('fill', color)
 
     return rect
@@ -170,40 +179,52 @@ class CircleDiagram extends Diagram {
   /**
    * Creates an SVG text element to display the percentage label.
    *
-   * @param {number} xCoord - The x-coordinate for the text element.
-   * @param {number} yCoord - The y-coordinate for the text element.
+   * @param {object} coords - The coordinates.
    * @param {number} angle - The angle representing the percentage in decimal form.
    * @returns {SVGTextElement} The created SVG text element displaying the percentage.
    */
-  #createPercentLabel (xCoord, yCoord, angle) {
+  #createPercentLabel (coords, angle) {
+    const MOVE_X = 3
+    const MOVE_Y = 8
+
     const textPercent = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-    textPercent.setAttribute('x', xCoord * 3)
-    textPercent.setAttribute('y', yCoord + 8)
+    textPercent.setAttribute('x', coords.xCoord * MOVE_X)
+    textPercent.setAttribute('y', coords.yCoord + MOVE_Y)
     textPercent.setAttribute('fill', 'black')
     textPercent.setAttribute('text-anchor', 'left')
     textPercent.setAttribute('font-size', this.#dataObject.config.fonts.xAxel)
 
     /* ------------ Calculate correct percentage ------------ */
-    const percentInDec = angle
-    const percent = Math.round((percentInDec * 100))
+    const percent = this.#calculatePercent(angle)
     /* ------------------------------------------------------ */
     textPercent.textContent = `${percent}%`
 
     return textPercent
   }
 
+
+  #calculatePercent (angle) {
+    const percentInDec = angle
+    const HUNDREDPERCENT = 100
+    const percent = Math.round((percentInDec * HUNDREDPERCENT))
+
+    return percent
+  }
+
   /**
    * Creates an SVG text element to display a label.
    *
-   * @param {number} xCoord - The x-coordinate for the text element.
-   * @param {number} yCoord - The y-coordinate for the text element.
+   * @param {object} coords - The coordinates.
    * @param {string} label - The text content to display.
    * @returns {SVGTextElement} The created SVG text element displaying the label.
    */
-  #createTextLabel (xCoord, yCoord, label) {
+  #createTextLabel (coords, label) {
+    const MOVE_X = 6
+    const MOVE_Y = 8
+
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-    text.setAttribute('x', xCoord * 6)
-    text.setAttribute('y', yCoord + 8)
+    text.setAttribute('x', coords.xCoord * MOVE_X)
+    text.setAttribute('y', coords.yCoord + MOVE_Y)
     text.setAttribute('fill', 'black')
     text.setAttribute('text-anchor', 'left')
     text.setAttribute('font-size', this.#dataObject.config.fonts.xAxel)

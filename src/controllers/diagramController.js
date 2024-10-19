@@ -6,6 +6,7 @@
  */
 
 import { PATH, VIEWS } from '../config/Paths.js'
+import { DIAGRAM_TYPES } from '../config/DiagramTypes.js'
 import { FinanceFetcher } from '../models/FinanceFetcher.js'
 
 /**
@@ -30,7 +31,7 @@ export class DiagramController {
 
     const viewData = JSON.stringify(sendToView)
 
-    res.render(VIEWS.HORIZONTALBAR, { PATH, viewData })
+    res.render(VIEWS.HORIZONTALBAR, { PATH, DIAGRAM_TYPES, viewData })
   }
 
   /**
@@ -42,8 +43,15 @@ export class DiagramController {
    * @param {Function} next - Express next middleware function.
    */
   async linediagram (req, res, next) {
-    const viewData = await this.#getData()
-    res.render(VIEWS.LINEDIAGRAM, { PATH, viewData })
+    const unPrePairedData = await this.#getData()
+
+    const preparedData = await this.#prepareData(unPrePairedData)
+    const sendToView = {
+      data: preparedData
+    }
+
+    const viewData = JSON.stringify(sendToView)
+    res.render(VIEWS.LINEDIAGRAM, { PATH, DIAGRAM_TYPES, viewData })
   }
 
   /**
@@ -55,8 +63,15 @@ export class DiagramController {
    * @param {Function} next - Express next middleware function.
    */
   async circlediagram (req, res, next) {
-    const viewData = await this.#getData()
-    res.render(VIEWS.CIRCLEDIAGRAM, { PATH, viewData })
+    const unPrePairedData = await this.#getData()
+
+    const preparedData = await this.#prepareData(unPrePairedData)
+    const sendToView = {
+      data: preparedData
+    }
+
+    const viewData = JSON.stringify(sendToView)
+    res.render(VIEWS.CIRCLEDIAGRAM, { PATH, DIAGRAM_TYPES, viewData })
   }
 
   /**
