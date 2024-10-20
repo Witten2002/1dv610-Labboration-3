@@ -20,6 +20,8 @@ customElements.define('my-show-diagram',
   class extends HTMLElement {
     #data
     #diagramFactory
+    #height
+    #width
     /**
      * Creates an instance of the custom element and attaches a shadow DOM.
      */
@@ -35,7 +37,7 @@ customElements.define('my-show-diagram',
      * @returns {string[]} The list of attributes to be observed.
      */
     static get observedAttributes () {
-      return [ATTRIBUTES.DATA, ATTRIBUTES.TYPE]
+      return [ATTRIBUTES.HEIGHT , ATTRIBUTES.WIDTH, ATTRIBUTES.DATA, ATTRIBUTES.TYPE]
     }
 
     /**
@@ -46,9 +48,11 @@ customElements.define('my-show-diagram',
      * @param {string} newValue - The new value of the attribute.
      */
     attributeChangedCallback (name, oldValue, newValue) {
-      
-      console.log(name)
-      if (name === ATTRIBUTES.DATA && oldValue !== newValue) {
+      if (name === ATTRIBUTES.HEIGHT && oldValue !== newValue) {
+        this.#height = Number.parseInt(newValue)
+      } else if (name === ATTRIBUTES.WIDTH && oldValue !== newValue) {
+        this.#width = Number.parseInt(newValue)
+      } else if (name === ATTRIBUTES.DATA && oldValue !== newValue) {
         this.#data = JSON.parse(newValue)
         this.#createDiagram()
       } else if (name === ATTRIBUTES.TYPE && oldValue !== newValue) {
@@ -65,9 +69,16 @@ customElements.define('my-show-diagram',
       this.#diagramFactory = new DiagramFactory({
         elementId: '#svgDiagram',
         shadowRoot: this.shadowRoot,
-        height: 400,
-        width: 600,
-        data: this.#data.data
+        height: this.#height,
+        width: this.#width,
+        data: this.#data.data,
+        interactivity: {
+          expand: true,
+          infoBoxWhenHover: true
+        },
+        animation: {
+          speed: 100
+        }
       })
     }
 

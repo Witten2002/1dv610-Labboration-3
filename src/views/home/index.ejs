@@ -1,29 +1,78 @@
 <div class="py-5 px-20">
-  <h1 class="flex flex-row justify-center items-center text-3xl">Välkommen till DiagramFactory!</h1>
-  <p class="flex flex-row justify-center items-center pt-3">Skapa, anpassa och visualisera data enkelt med våra kraftfulla diagramverktyg.</p>
+  <h1 class="text-center text-3xl">Welcome to DiagramFactory!</h1>
+  <p class="mt-10">Create, customize, and visualize data effortlessly with our powerful charting tools designed to make data presentation seamless and visually engaging.</p>
 
   <section class="pt-10">
-    <h2 class="flex flex-row justify-start items-center text-2xl">Om oss</h2>
+    <h2 class="flex flex-row justify-start items-center text-2xl">About Us</h2>
     <p>
-      På DiagramFactory erbjuder vi en plattform där du kan skapa dina egna diagram med några få klick. Oavsett om du arbetar med dataanalys, presentationer eller undervisning, ger våra verktyg dig möjligheten att skapa visuellt tilltalande och interaktiva diagram.
+      At DiagramFactory, we provide a platform where you can create your own charts and graphs with just a few clicks. Whether you're working in data analysis, preparing presentations, or teaching students, our tools offer the flexibility and ease you need to create visually stunning and interactive diagrams. Our mission is to simplify the process of turning raw data into professional-grade visuals, empowering users from all fields to communicate their insights more effectively.
     </p>
   </section>
 
   <section class="pt-10">
-    <h2 class="flex flex-row justify-start items-center text-2xl">Vad vi erbjuder</h2>
+    <h2 class="flex flex-row justify-start items-center text-2xl">What We Offer</h2>
+    <ul class="list-disc list-inside pl-5 my-3">
+      <li>
+        <b>User-friendly and Intuitive Chart Builder</b>: Our diagrams are built using a straightforward interface thats easy for beginners while offering enough customization for experienced users. No need for complex software—just upload your data and let the platform do the work.
+      </li>
+      <li>
+        <b>A Wide Variety of Chart Types</b>: We provide a rich selection of chart types, including bar charts, line graphs, pie charts, scatter plots, and more. No matter your data set or analysis goal, there's a diagram type perfectly suited to your needs.
+      </li>
+      <li>
+        <b>Real-time Customization</b>: With DiagramFactory, you can customize your charts in real-time. Choose your own colors, labels, fonts, and more. Adjust your data on the fly and see the changes instantly, ensuring your diagrams align perfectly with your vision.
+      </li>
+      <li>
+      <b>Interactive Features</b>: Our platform offers interactive elements that enhance your visualizations. Make your charts dynamic with hover effects, animations, and tooltips. Engage your audience with features that go beyond static images, helping to communicate complex ideas more clearly.
+      </li>
+      <li>
+        <b>Save and Share</b>: Once your chart is ready, you can easily save it in various formats—whether its for a presentation, a report, or for sharing online. You can download high-quality images or even share your diagrams directly with others via a link or embedding them into websites and documents.
+      </li>
+    </ul>
+  </section>
+
+  <% if (viewData && DIAGRAM_TYPES) { %>
+    <div class="flex flex-row justify-between items-center 2xl:mr-48 my-10"> 
+      <my-show-diagram height="200" width="300" data="<%= viewData %>" type="<%= DIAGRAM_TYPES.HORIZONTAL_BAR %>"></my-show-diagram>
+      <my-show-diagram height="200" width="300" data="<%= viewData %>" type="<%= DIAGRAM_TYPES.LINE_DIAGRAM %>"></my-show-diagram>
+      <my-show-diagram height="200" width="300" data="<%= viewData %>" type="<%= DIAGRAM_TYPES.CIRCLE_DIAGRAM %>"></my-show-diagram>
+    </div>
+  <% } %>
+
+  <section class="pt-10">
+    <h2 class="flex flex-row justify-start items-center text-2xl">Why Choose DiagramFactory?</h2>
+    <p class="my-3">
+      Data visualization is a powerful way to convey information, and with DiagramFactory, we've streamlined the process to make it accessible to everyone. No specialized skills are needed—our tools are designed for users at all levels. Whether youre a data analyst looking to transform a complex dataset into a comprehensible graph, a student needing to present findings, or a professional preparing a business report, DiagramFactory gives you the tools to make your data come to life.
+    </p>
     <ul class="list-disc list-inside pl-5">
-      <li>Enkel och intuitiv diagramskapare</li>
-      <li>Flera olika diagramtyper att välja mellan (stapeldiagram, linjediagram, cirkeldiagram m.m.)</li>
-      <li>Möjlighet att anpassa färger, etiketter och data i realtid</li>
-      <li>Spara dina diagram och dela dem med andra</li>
+      <li>
+        <b>For Business Users</b>: DiagramFactory is the perfect tool for professionals who need to present data-driven insights clearly and effectively. Our charts are ideal for financial reports, performance analysis, and marketing trends—ensuring your audience understands the story behind the numbers.
+      </li>
+      <li>
+        <b>For Educators and Students</b>: Teachers and students can benefit greatly from our interactive and easy-to-use platform. Presenting lessons with clear, custom charts helps facilitate understanding, and students can use DiagramFactory for projects, reports, and data analysis exercises.
+      </li>
+      <li>
+        <b>For Developers and Analysts</b>: If youre a developer or a data scientist, you can integrate our charting library into your own applications. Create dynamic, interactive visualizations for your software or website without reinventing the wheel.
+      </li>
+      <li>
+      <b>Interactive Features</b>: Our platform offers interactive elements that enhance your visualizations. Make your charts dynamic with hover effects, animations, and tooltips. Engage your audience with features that go beyond static images, helping to communicate complex ideas more clearly.
+      </li>
+      <li>
+        <b>Save and Share</b>: Once your chart is ready, you can easily save it in various formats—whether its for a presentation, a report, or for sharing online. You can download high-quality images or even share your diagrams directly with others via a link or embedding them into websites and documents.
+      </li>
     </ul>
   </section>
 
   <section class="pt-10">
-    <h2 class="flex flex-row justify-start items-center text-2xl">Kom igång</h2>
+    <h2 class="flex flex-row justify-start items-center text-2xl my-3">Join the DiagramFactory Community</h2>
     <p>
-      Börja skapa dina diagram idag! Ladda upp din data, välj en diagramtyp och anpassa den efter dina behov. Med DiagramFactory kan du snabbt omvandla data till professionella visualiseringar.
+      At DiagramFactory, were committed to continuously improving our platform based on user feedback. Our growing community of users, from businesses to educators and students, is constantly sharing ideas and suggestions. We regularly update our platform with new features, chart types, and customization options to ensure that our users have access to the best tools for data visualization.
+    </p>
+
+    <p>
+      Join the thousands of people who trust DiagramFactory to turn their data into professional visualizations. Sign up today and experience the power of intuitive, interactive data visualization.
     </p>
   </section>
 </div>
+
+<script type="module" src="./js/components/my-showDiagram/index.js"></script>
     

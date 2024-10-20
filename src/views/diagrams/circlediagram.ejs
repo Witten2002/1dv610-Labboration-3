@@ -9,9 +9,9 @@
     </ul>
   </div>
   
-  <div class="flex flex-col mx-10 2xl:mx-96 my-10">
+  <div class="flex flex-col mx-10 2xl:mx-auto my-10">
     <h1 class="text-4xl text-center font-bold">Nvidia</h1>
-    <div class="flex flex-row mx-10 2xl:mx-96 gap-10 my-10 md:flex-col">
+    <div class="flex flex-row mx-10 2xl:auto gap-10 my-10 md:flex-col">
       <div class="flex flex-col mx-10 2xl:ml-48 gap-10">
         <p>
           Nvidia Corporation is an American multinational technology company, founded in 1993 by Jensen Huang, Chris Malachowsky, and Curtis Priem. It has since grown into one of the most prominent players in the world of computing, specifically in the development of graphics processing units (GPUs) and artificial intelligence (AI) technologies. Headquartered in Santa Clara, California, Nvidia is known for pushing the boundaries of what's possible in the realm of high-performance computing, gaming, professional visualization, and AI-driven applications.
@@ -30,13 +30,13 @@
 
       <% if (viewData && DIAGRAM_TYPES) { %>
         <div class="flex flex-col justify-center items-center 2xl:mr-48"> 
-          <my-show-diagram data="<%= viewData %>" type="<%= DIAGRAM_TYPES.CIRCLE_DIAGRAM %>"></my-show-diagram>
+          <my-show-diagram height="400" width="600" data="<%= viewData %>" type="<%= DIAGRAM_TYPES.CIRCLE_DIAGRAM %>"></my-show-diagram>
           <span class="text-gray-500 italic">Nvidias reveneu for the last 5 years. (Billions)</span>
         </div>
       <% } %>
     </div>
     
-    <div class="flex flex-col mx-10 2xl:mx-96 gap-10 my-10">
+    <div class="flex flex-col mx-10 2xl:mx-auto gap-10 my-10">
       <div class="flex flex-col mx-10 2xl:mx-48 gap-10">
         <h1 class="text-2xl font-bold">Nvidia and Artificial Intelligence</h1>
         <p>

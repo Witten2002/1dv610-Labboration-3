@@ -27,7 +27,6 @@ class FinanceFetcher {
     const data = await response.json()
 
     this.#data = data
-    
   }
 
   /**

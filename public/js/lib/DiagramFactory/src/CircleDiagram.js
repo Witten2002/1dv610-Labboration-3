@@ -56,8 +56,9 @@ class CircleDiagram extends Diagram {
    */
   #createEachPath (svgWidth, svgHeight, svg) {
     const DIVIDED = 2
+    const PADDING = 30
 
-    const radius = Math.min(svgWidth, svgHeight) / DIVIDED
+    const radius = Math.min(svgWidth, svgHeight) / DIVIDED - PADDING
     const centerX = svgWidth / DIVIDED
     const centerY = svgHeight / DIVIDED
 
