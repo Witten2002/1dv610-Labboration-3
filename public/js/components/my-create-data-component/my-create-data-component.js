@@ -18,6 +18,13 @@ customElements.define('my-create-data-component',
   #boundLabelBox
   #boundValueBox
   #boundColorBox
+  #label
+  #value
+  #color
+  #submitBtn
+  #boundSubmitBtn
+  #removeBtn
+  #boundremoveBtn
     
     /**
      * Creates an instance of the custom element and attaches a shadow DOM.
@@ -30,25 +37,8 @@ customElements.define('my-create-data-component',
       this.#labelBox = this.shadowRoot.querySelector('#labelBox')
       this.#valueBox = this.shadowRoot.querySelector('#valueBox')
       this.#colorBox = this.shadowRoot.querySelector('#colorBox')
-    }
-    
-    /**
-     * Returns an array of attributes to be observed for changes.
-     *
-     * @returns {string[]} The list of attributes to be observed.
-     */
-    static get observedAttributes () {
-      return []
-    }
-    
-    /**
-     * Called when one of the observed attributes changes.
-     *
-     * @param {string} name The name of the attribute that changed.
-     * @param {string} oldValue The old value of the attribute.
-     * @param {string} newValue The new value of the attribute.
-     */
-    attributeChangedCallback (name, oldValue, newValue) {
+      this.#submitBtn = this.shadowRoot.querySelector('#submitBtn')
+      this.#removeBtn = this.shadowRoot.querySelector('#deleteBtn')
     }
     
     /**
@@ -56,8 +46,20 @@ customElements.define('my-create-data-component',
      */
     connectedCallback () {
       this.#labelBox.addEventListener('input', this.#boundLabelBox = (event) => {
-        // checkvalue and send to another component.
+        this.#label = this.#labelBox.value
       })
+
+      this.#valueBox.addEventListener('input', this.#boundValueBox = (event) => {
+        this.#value = Number.parseInt(this.#valueBox.value)
+      })
+
+      this.#colorBox.addEventListener('input', this.#boundColorBox = (event) => {
+        this.#color = this.#colorBox.value
+      })
+
+      this.#submitBtn.addEventListener('click', this.#boundSubmitBtn = (event => this.#sendForm(event)))
+
+      this.#removeBtn.addEventListener('click', this.#boundremoveBtn = (event) => this.#sendRemoveForm(event))
 
     }
     
@@ -66,5 +68,43 @@ customElements.define('my-create-data-component',
      */
     disconnectedCallback () {
       this.#labelBox.removeEventListener('', this.#boundLabelBox)
+      this.#valueBox.removeEventListener('', this.#boundValueBox)
+      this.#colorBox.removeEventListener('', this.#boundColorBox)
+      this.#submitBtn.removeEventListener('', this.#boundSubmitBtn)
+      this.#removeBtn.removeEventListener('', this.#boundremoveBtn)
+    }
+
+    #sendForm (event) {
+      event.preventDefault()
+  
+      if (this.#label && this.#value && this.#color) {
+        this.dispatchEvent(new CustomEvent('create:data:component:data', {
+          detail: {
+            data: {
+              label: this.#label,
+              value: this.#value,
+              color: this.#color
+            }
+          }
+        }))
+        this.#submitBtn.setAttribute('disabled', true)
+        this.#removeBtn.removeAttribute('disabled')
+      }
+    }
+
+    #sendRemoveForm (event) {
+      event.preventDefault()
+
+      this.dispatchEvent(new CustomEvent('remove:data:component:data', {
+        detail: {
+          data: {
+            label: this.#label,
+            value: this.#value,
+            color: this.#color
+          }
+        }
+      }))
+      this.#submitBtn.removeAttribute('disabled')
+      this.#removeBtn.setAttribute('disabled', true)
     }
   })

@@ -10,9 +10,9 @@ template.innerHTML = `
 <link href='https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css' rel="stylesheet">
 <div class="flex flex-row justify-center items-center gap-3">
   <form class="flex flex-row gap-3">
-    <input id="labelBox" type="text" placeholder="Enter a label" class="p-2 border border-gray-300 rounded">
-    <input id="valueBox" type="text" placeholder="Enter a value" class="p-2 border border-gray-300 rounded">
-    <select id="colorBox" class="p-2 border border-gray-300 rounded">
+    <input id="labelBox" type="text" placeholder="Enter a label" class="p-2 border border-gray-300 rounded" required>
+    <input id="valueBox" type="text" placeholder="Enter a value" class="p-2 border border-gray-300 rounded" required>
+    <select id="colorBox" class="p-2 border border-gray-300 rounded" required>
       <option value="" disabled selected>Select a color</option>
       <option value="red">Red</option>
       <option value="orange">Orange</option>
@@ -35,6 +35,8 @@ template.innerHTML = `
       <option value="maroon">Maroon</option>
       <option value="navy">Navy</option>
     </select>
+    <button id="submitBtn" type="submit" class="p-2 bg-green-500 text-white rounded">Add</button>
+    <button id="deleteBtn" type="submit" class="p-2 bg-red-500 text-white rounded" disabled>Remove</button>
   </form>
 
 </div>
