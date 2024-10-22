@@ -23,17 +23,19 @@ template.innerHTML = `
           <option value="${DIAGRAM_TYPES.HORIZONTAL_BAR}">Bar Diagram</option>
           <option value="${DIAGRAM_TYPES.LINE_DIAGRAM}">Line Diagram</option>
           <option value="${DIAGRAM_TYPES.CIRCLE_DIAGRAM}">Circle Diagram</option>
-        </select>
-        <button id="renderDiagramBtn" type="submit" class="p-2 bg-blue-500 text-white rounded w-20 px-3" disabled>Render</button>
-      </section>
+      </select>
+      <button id="renderDiagramBtn" type="submit" class="p-2 bg-blue-500 text-white rounded w-20 px-3" disabled>Render</button>
+    </section>
   </form>
 </div>
 <div id="pageTwo" class="hidden">
   <div class=" flex flex-col justify-center items-center w-full my-5">
     <button id="backBtn" type="submit" class="p-2 bg-blue-500 text-white rounded w-20 px-3">Back</button>
-    <my-show-diagram></my-show-diagram>
-    <div class="flex flec-row justify-end items-center">
-      <button id="svgBtn" type="submit" class="p-2 bg-blue-500 text-white rounded w-20 px-3">SVG</button>
+    <div id="placeForDiagram">
+      <my-show-diagram></my-show-diagram>
+    </div>
+    <div class="flex flec-row justify-end items-center py-10">
+      <button id="svgBtn" type="submit" class="p-2 bg-blue-500 text-white rounded w-40 px-3">Download SVG</button>
     </div>
   </div>
 </div>

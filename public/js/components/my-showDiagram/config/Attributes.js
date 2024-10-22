@@ -9,7 +9,7 @@ const ATTRIBUTES = {
   DATA: 'data',
   TYPE: 'type',
   HEIGHT: 'height',
-  WIDTH: 'width'
+  WIDTH: 'width',
 }
 
 export { ATTRIBUTES }

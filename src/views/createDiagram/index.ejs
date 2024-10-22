@@ -1,5 +1,46 @@
-<h1>CREATE DIAGRAM</h1>
+<div class="w-full flex flex-col justify-center items-center gap-10">
+  <div class="flex flex-col mx-10 2xl:mx-auto my-10">  
+    <h1 class="text-4xl text-center font-bold">Create your digram using DiagramFactory</h1>
+    <my-create-diagram class="my-10"></my-create-diagram>
 
-<my-create-diagram></my-create-diagram>
+    <h1 class="text-4xl text-center font-bold mt-20">How to use it?</h1>
+    <div class="flex flex-row mx-10 2xl:auto gap-10 my-10 md:flex-col">
+      <div class="flex flex-col mx-10 2xl:mx-48 gap-10">
+        <p>
+          To create a diagram using this interface, the first step is to input a label, which represents the name or identifier of your data point. This could be anything from a category name to a specific measurement or entity you want to display in the diagram. Next, you need to enter a value associated with this label, which could represent quantities, percentages, or any numerical data you want to visualize. After entering the value, you get to choose a color that will be used to visually distinguish this data point in the diagram. This allows for easy identification of the different data points when they are displayed together in a visual format.
+        </p>
+        <p>
+          If you would like to input more data points, you can easily do so by clicking on the "Add new input" button. When you click this button, a new input form will appear, allowing you to add more labels, values, and colors for additional data points. This step can be repeated as many times as necessary until you have created all the data points required for your diagram. By adding multiple data points, you will be able to generate a more comprehensive and meaningful visualization of your dataset, which can then be represented through various types of diagrams.
+        </p>
+
+        <p>
+          In the case where you mistakenly input incorrect data or decide that a particular data point is no longer necessary, you can remove it easily. Simply locate the data point in the list and click on the "Remove" button next to it. This will delete the data point from the dataset and ensure that it is not included in the final diagram. This feature gives you the flexibility to manage and adjust your data as needed, ensuring that only the correct and relevant information is visualized.
+        </p>
+
+        <p>
+          Before moving forward to create the diagram itself, it's important to note that you need to have at least one data point added to the dataset. Without any data, the system cannot generate a meaningful diagram. Once you have added sufficient data, you can proceed to the next step, which is selecting the type of diagram you want to create.
+        </p>
+
+        <p>
+          To choose a diagram, use the "Select a Diagram" dropdown menu. In this menu, you will find various options for visualizing your data. Depending on your needs, you may choose a bar chart, line chart, pie chart, or another type of diagram that best suits the data youve entered. Each type of diagram offers different benefits—bar charts are great for comparing quantities, line charts are useful for showing trends over time, and pie charts are ideal for displaying proportions within a whole.
+        </p>
+
+        <p>
+          After selecting your desired diagram type, click on the "Render" button. This action will generate the diagram based on the data points youve input. The system will visualize the data in the selected diagram format, displaying the labels, values, and colors youve chosen in a clear and easy-to-understand manner. At this stage, you can review the diagram to see if it accurately represents your data.
+        </p>
+
+        <p>
+          If you find that you need to make changes to the data or the diagram settings, you can simply click on the "Back" button. This will take you back to the input form where you can modify existing data points, add new ones, or even remove entries if necessary. This flexibility allows you to fine-tune your data and diagram until you are satisfied with the result.
+        </p>
+
+        <p>
+          Once you are happy with the diagram, you have the option to save it for future use. By clicking the "Download SVG" button, you can download the diagram as a Scalable Vector Graphics (SVG) file. The SVG format is highly versatile because it can be resized without losing quality, making it perfect for use in presentations, reports, or other digital formats where you need a clear and sharp image of your diagram. With the diagram saved as an SVG file, you can easily integrate it into other projects or share it with others.
+        </p>
+        
+        </div>
+    </div>
+  
+  </div>
+</div>
 
 <script type="module" src="./js/components/my-create-diagram/index.js"></script>

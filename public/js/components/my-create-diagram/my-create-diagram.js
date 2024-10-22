@@ -34,6 +34,7 @@ customElements.define('my-create-diagram',
     #svgBtn
     #boundSvgBtn
     #form
+    #placeForDiagram
     
     /**
      * Creates an instance of the custom element and attaches a shadow DOM.
@@ -55,6 +56,7 @@ customElements.define('my-create-diagram',
       this.#backBtn = this.shadowRoot.querySelector('#backBtn')
       this.#svgBtn = this.shadowRoot.querySelector('#svgBtn')
       this.#form = this.shadowRoot.querySelector('form')
+      this.#placeForDiagram = this.shadowRoot.querySelector('#placeForDiagram')
 
       // start with one box
       this.#addNewInputBox()
@@ -227,6 +229,9 @@ customElements.define('my-create-diagram',
       this.#pageOne.classList.add('hidden')
       this.#pageTwo.classList.remove('hidden')
       this.#myShowDiagram.setAttribute('type', this.#diagramType)
+
+      this.#diagramChooser.selectedIndex = 0
+      this.#renderDiagramBtn.setAttribute('disabled', true)
     }
 
     /**
@@ -240,6 +245,10 @@ customElements.define('my-create-diagram',
 
       this.#pageOne.classList.remove('hidden')
       this.#pageTwo.classList.add('hidden')
+
+      this.#placeForDiagram.removeChild(this.#myShowDiagram)
+      this.#myShowDiagram = document.createElement('my-show-diagram')
+      this.#placeForDiagram.append(this.#myShowDiagram)
     }
 
     /**
