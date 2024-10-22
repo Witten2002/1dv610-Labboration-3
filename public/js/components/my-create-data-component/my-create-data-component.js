@@ -1,5 +1,5 @@
 /**
- * KOMMENTAR FÖR MODULEN
+ * Custom web component my-create-data.
  *
  * @author Ludwig Wittenberg <lw223cq@student.lnu.se>
  * @version 1.0.0
@@ -45,17 +45,11 @@ customElements.define('my-create-data-component',
      * Called when the element is connected to the DOM.
      */
     connectedCallback () {
-      this.#labelBox.addEventListener('input', this.#boundLabelBox = (event) => {
-        this.#label = this.#labelBox.value
-      })
+      this.#labelBox.addEventListener('input', this.#boundLabelBox = (event) => this.#setLabel())
 
-      this.#valueBox.addEventListener('input', this.#boundValueBox = (event) => {
-        this.#value = Number.parseInt(this.#valueBox.value)
-      })
+      this.#valueBox.addEventListener('input', this.#boundValueBox = (event) => this.#setValue())
 
-      this.#colorBox.addEventListener('input', this.#boundColorBox = (event) => {
-        this.#color = this.#colorBox.value
-      })
+      this.#colorBox.addEventListener('input', this.#boundColorBox = (event) => this.#setColor())
 
       this.#submitBtn.addEventListener('click', this.#boundSubmitBtn = (event => this.#sendForm(event)))
 
@@ -74,6 +68,59 @@ customElements.define('my-create-data-component',
       this.#removeBtn.removeEventListener('', this.#boundremoveBtn)
     }
 
+    /**
+     * Sets the label value from the input box and updates the UI based on the input validity.
+     * If the input value is a string, the label is set, the border color is changed to green,
+     * and the submit button is enabled. Otherwise, the border color is changed to red,
+     * and the submit button is disabled.
+     */
+    #setLabel () {
+      const value = this.#labelBox.value
+
+      if (typeof value === 'string') {
+        this.#label = value
+
+        this.#labelBox.style.borderColor = 'green'
+        this.#submitBtn.removeAttribute('disabled')
+      } else {
+        this.#labelBox.style.borderColor = 'red'
+        this.#submitBtn.setAttribute('disabled', true)
+      }
+    }
+
+    /**
+     * Sets the value from the input box and updates the UI based on the input validity.
+     * If the input value is a non-negative integer, the value is set, the border color is changed to green,
+     * and the submit button is enabled. Otherwise, the border color is changed to red,
+     * and the submit button is disabled.
+     */
+    #setValue () {
+      const value = Number.parseInt(this.#valueBox.value)
+
+      if (value >= 0) {
+        this.#value = value
+
+        this.#valueBox.style.borderColor = 'green'
+        this.#submitBtn.removeAttribute('disabled')
+      } else {
+        this.#valueBox.style.borderColor = 'red'
+        this.#submitBtn.setAttribute('disabled', true)
+      }
+    }
+
+    /**
+     * Sets the color value from the color box input.
+     */
+    #setColor () {
+      this.#color = this.#colorBox.value
+    }
+
+    /**
+     * Handles the form submission by dispatching a custom event with the form data,
+     * disabling and hiding the submit button, and enabling and showing the remove button.
+     *
+     * @param {Event} event - The event object associated with the form submission.
+     */
     #sendForm (event) {
       event.preventDefault()
   
@@ -87,11 +134,16 @@ customElements.define('my-create-data-component',
             }
           }
         }))
-        this.#submitBtn.setAttribute('disabled', true)
-        this.#removeBtn.removeAttribute('disabled')
+        this.#toggleDisability()
       }
     }
 
+    /**
+     * Handles the form submission by dispatching a custom event with the form data,
+     * disabling and hiding the submit button, and enabling and showing the remove button.
+     *
+     * @param {Event} event - The event object associated with the form submission.
+     */
     #sendRemoveForm (event) {
       event.preventDefault()
 
@@ -104,7 +156,16 @@ customElements.define('my-create-data-component',
           }
         }
       }))
-      this.#submitBtn.removeAttribute('disabled')
-      this.#removeBtn.setAttribute('disabled', true)
+      this.#toggleDisability()
+    }
+
+    /**
+     * Toggles the visibility and state of the submit and remove buttons.
+     */
+    #toggleDisability () {
+      this.#submitBtn.toggleAttribute('disabled')
+      this.#submitBtn.classList.toggle('hidden')
+      this.#removeBtn.toggleAttribute('disabled')
+      this.#removeBtn.classList.toggle('hidden')
     }
   })

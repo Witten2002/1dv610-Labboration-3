@@ -1,5 +1,5 @@
 /**
- * KOMMENTAR FÖR MODULEN
+ * Creates the web component my-show-diagram.
  *
  * @author Ludwig Wittenberg <lw223cq@student.lnu.se>
  * @version 1.0.0
@@ -60,11 +60,20 @@ customElements.define('my-show-diagram',
       }
     }
 
+    /**
+     * Creates and renders the diagram by first creating the configuration
+     * and then rendering the diagram based on the created configuration.
+     */
     #createDiagram () {
       this.#createConfig()
       this.#renderDiagram()
     }
 
+    /**
+     * Creates the configuration for the diagram by initializing the DiagramFactory
+     * with the necessary parameters such as element ID, shadow root, dimensions, data,
+     * interactivity options, and animation settings.
+     */
     #createConfig () {
       this.#diagramFactory = new DiagramFactory({
         elementId: '#svgDiagram',

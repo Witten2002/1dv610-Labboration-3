@@ -1,5 +1,5 @@
 /**
- * KOMMENTAR FÖR MODULEN
+ * Template for creating my-create-data-component.
  *
  * @author Ludwig Wittenberg <lw223cq@student.lnu.se>
  * @version 1.0.0
@@ -35,8 +35,8 @@ template.innerHTML = `
       <option value="maroon">Maroon</option>
       <option value="navy">Navy</option>
     </select>
-    <button id="submitBtn" type="submit" class="p-2 bg-green-500 text-white rounded">Add</button>
-    <button id="deleteBtn" type="submit" class="p-2 bg-red-500 text-white rounded" disabled>Remove</button>
+    <button id="submitBtn" type="submit" class="p-2 bg-green-500 text-white rounded w-20 px-3">Add</button>
+    <button id="deleteBtn" type="submit" class="p-2 bg-red-500 text-white rounded hidden w-20 px-3" disabled>Remove</button>
   </form>
 
 </div>
