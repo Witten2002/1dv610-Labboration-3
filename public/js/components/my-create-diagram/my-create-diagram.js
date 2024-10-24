@@ -7,7 +7,7 @@
 
 import { template } from './my-create-diagram-template.js'
 import '../my-create-data-component/index.js'
-import '../my-showDiagram/index.js'
+import '../my-show-diagram/index.js'
 import { DIAGRAM_TYPES } from './config/DiagramTypes.js'
 
 customElements.define('my-create-diagram',
@@ -19,7 +19,7 @@ customElements.define('my-create-diagram',
     #customDataElement
     #boundCustomDataElement
     #dataWrapper
-    #addNewInputBtn
+    #addNewInputBtnField
     #boundAddNewInputBtn
     #diagramChooser
     #boundDiagramChooser
@@ -47,7 +47,7 @@ customElements.define('my-create-diagram',
       this.#customData = []
 
       this.#dataWrapper = this.shadowRoot.querySelector('#dataWrapper')
-      this.#addNewInputBtn = this.shadowRoot.querySelector('#addNewInputBtn')
+      this.#addNewInputBtnField = this.shadowRoot.querySelector('#addNewInputBtn')
       this.#diagramChooser = this.shadowRoot.querySelector('#diagramChooser')
       this.#myShowDiagram = this.shadowRoot.querySelector('my-show-diagram')
       this.#renderDiagramBtn = this.shadowRoot.querySelector('#renderDiagramBtn')
@@ -72,7 +72,7 @@ customElements.define('my-create-diagram',
        * @param {CustomEvent} event - The custom event containing the data to be submitted.
        * @returns {void}
        */
-      this.#addNewInputBtn.addEventListener('click', this.#boundAddNewInputBtn = (event) => this.#addNewInputBox())
+      this.#addNewInputBtnField.addEventListener('click', this.#boundAddNewInputBtn = (event) => this.#addNewInputBox())
 
       /**
        * Adds event listeners to various buttons and elements for handling user interactions.
@@ -88,7 +88,7 @@ customElements.define('my-create-diagram',
        * @param {CustomEvent} event - The custom event containing the data to be submitted.
        * @returns {void}
        */
-      this.#renderDiagramBtn.addEventListener('click', this.#boundDiagramChooser = (event) => this.#renderDiagram(event))
+      this.#renderDiagramBtn.addEventListener('click', this.#boundRenderDiagramBtn = (event) => this.#renderDiagram(event))
 
       /**
        * Adds event listeners to various buttons and elements for handling user interactions.
@@ -111,17 +111,15 @@ customElements.define('my-create-diagram',
      * Called when the element is disconnected from the DOM.
      */
     disconnectedCallback () {
-      this.#customDataElement.removeEventListener('', this.#boundCustomDataElement)
+      this.#addNewInputBtnField.removeEventListener('click', this.#boundAddNewInputBtn)
 
-      this.#addNewInputBox.removeEventListener('', this.#boundAddNewInputBtn)
+      this.#diagramChooser.removeEventListener('input', this.#boundDiagramChooser)
 
-      this.#diagramChooser.removeEventListener('', this.#boundDiagramChooser)
+      this.#renderDiagramBtn.removeEventListener('click', this.#boundRenderDiagramBtn)
 
-      this.#renderDiagramBtn.removeEventListener('', this.#boundRenderDiagramBtn)
+      this.#backBtn.removeEventListener('click', this.#boundBackBtn)
 
-      this.#backBtn.removeEventListener('', this.#boundBackBtn)
-
-      this.#svgBtn.removeEventListener('', this.#boundSvgBtn)
+      this.#svgBtn.removeEventListener('click', this.#boundSvgBtn)
     }
 
     /**

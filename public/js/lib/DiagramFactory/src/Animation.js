@@ -52,10 +52,9 @@ class Animation {
    */
   #animateHorizontalBar (config, speed) {
     let currentHeight = 0
-    let currentY = parseInt(this.#element.getAttribute('y')) + config.finalHeight
+    let currentY = this.#calcCurrentY(config)
 
-    const increment = config.finalHeight / speed
-    const yIncrement = config.finalHeight / speed
+    const increment = this.#calcIncrement(config, speed)
 
     /**
      * Animates the bars.
@@ -63,16 +62,46 @@ class Animation {
     const animate = () => {
       if (currentHeight < config.finalHeight) {
         currentHeight += increment
-        currentY -= yIncrement
-        this.#element.setAttribute('height', currentHeight)
-        this.#element.setAttribute('y', currentY)
+        currentY -= increment
+        this.#setHeight(currentHeight, currentY)
         requestAnimationFrame(animate)
       } else {
-        this.#element.setAttribute('height', config.finalHeight)
-        this.#element.setAttribute('y', config.finalYCoordinate)
+        this.#setHeight(config.finalHeight, config.finalYCoordinate)
       }
     }
     requestAnimationFrame(animate)
+  }
+
+  /**
+   * Calculates the current y-coordinate of the element.
+   *
+   * @param {object} config - The configuration of the animation.
+   * @returns {number} - The calculated y-coordinate.
+   */
+  #calcCurrentY (config) {
+    return parseInt(this.#element.getAttribute('y')) + config.finalHeight
+  }
+
+  /**
+   * Calculates the increment for the animation.
+   *
+   * @param {object} config - The configuration of the animation.
+   * @param {number} speed - The speed of the animation.
+   * @returns {number} - The calculated increment
+   */
+  #calcIncrement (config, speed) {
+    return config.finalHeight / speed
+  }
+
+  /**
+   * Sets the height and y-coordinate of the element.
+   *
+   * @param {number} height - The height of the element.
+   * @param {number} yCoordinate - The y-coordinate of the element.
+   */
+  #setHeight (height, yCoordinate) {
+    this.#element.setAttribute('height', height)
+    this.#element.setAttribute('y', yCoordinate)
   }
 }
 

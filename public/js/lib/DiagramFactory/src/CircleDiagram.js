@@ -74,7 +74,7 @@ class CircleDiagram extends Diagram {
 
       const path = this.#createPath(pathData, this.#visualData[i].color)
 
-      this.#createInteractivity(path, i)
+      this.#createInteractivity(path, this.#visualData[i])
 
       svg.appendChild(path)
 
@@ -213,12 +213,12 @@ class CircleDiagram extends Diagram {
    * Applies interactivity and animation settings to a given path element.
    *
    * @param {SVGPathElement} path - The SVG path element to apply settings to.
-   * @param {number} index - The index of the visual data associated with the path.
+   * @param {object} visualData - The data structure.
    */
-  #createInteractivity (path, index) {
+  #createInteractivity (path, visualData) {
     const interactivityAndAnimationSettings = {
       element: path,
-      visualData: this.#visualData[index],
+      visualData,
       type: diagramTypes.CIRCLE_DIAGRAM
     }
     super.applyInteractivityAndAnimation(interactivityAndAnimationSettings)
@@ -293,9 +293,7 @@ class CircleDiagram extends Diagram {
     textPercent.setAttribute('text-anchor', 'left')
     textPercent.setAttribute('font-size', this.#dataObject.config.fonts.xAxel)
 
-    /* ------------ Calculate correct percentage ------------ */
     const percent = this.#calculatePercent(angle)
-    /* ------------------------------------------------------ */
     textPercent.textContent = `${percent}%`
 
     return textPercent

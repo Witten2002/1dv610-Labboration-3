@@ -11,6 +11,7 @@ import logger from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { router } from './routes/router.js'
+import helmet from 'helmet'
 
 const app = express()
 const dirFullName = dirname(fileURLToPath(import.meta.url))
@@ -18,6 +19,8 @@ const dirFullName = dirname(fileURLToPath(import.meta.url))
 const baseURL = process.env.BASE_URL || '/'
 
 app.use(logger('dev'))
+
+app.use(helmet())
 
 app.set('view engine', 'ejs')
 app.set('views', join(dirFullName, 'views'))

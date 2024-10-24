@@ -5,4 +5,4 @@
  * @version 1.0.0
  */
 
-import './my-showDiagram.js'
+import './my-show-diagram.js'

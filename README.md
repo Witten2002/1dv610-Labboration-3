@@ -19,10 +19,10 @@ DiagramFactory is a web-based application that allows users to create, edit, and
 
 ## Screenshots
 
-<img src="./readmeIMG/home.png" alt="Example Diagram" width="600" height="300">
-<img src="./readmeIMG/creatediagram.png" alt="Example Diagram" width="600" height="300">
-<img src="./readmeIMG/createBardiagram.png" alt="Example Diagram" width="600" height="300">
-<img src="./readmeIMG/download.png" alt="Example Diagram" width="600" height="300">
+<img src="./readmeIMG/home.png" alt="Example Diagram" width="600">
+<img src="./readmeIMG/creatediagram.png" alt="Example Diagram" width="600">
+<img src="./readmeIMG/createBardiagram.png" alt="Example Diagram" width="600">
+<img src="./readmeIMG/download.png" alt="Example Diagram" width="600">
 
 ## Technical Information
 - Technologies: HTML, CSS, JavaScript (express, SSR)

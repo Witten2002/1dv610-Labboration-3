@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import { template } from './my-showDiagram-template.js'
+import { template } from './my-show-diagram-template.js'
 import { DiagramFactory } from '../../lib/DiagramFactory/DiagramFactory.js'
 import { DIAGRAM_TYPES } from './config/DiagramTypes.js'
 import { ATTRIBUTES } from './config/Attributes.js'

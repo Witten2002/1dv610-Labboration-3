@@ -21,7 +21,6 @@ class Interactivity {
   #title
   #value
   #orginalRadius
-  #eventTarget
   /* ----------------------------- */
 
   /**
@@ -31,12 +30,22 @@ class Interactivity {
    */
   constructor (element) {
     this.#element = element
-    this.#originalHeight = parseInt(this.#element.getAttribute('height'))
-    this.#originalWidth = parseInt(this.#element.getAttribute('width'))
+    this.#originalHeight = this.#toInt(this.#element.getAttribute('height'))
+    this.#originalWidth = this.#toInt(this.#element.getAttribute('width'))
 
-    this.#originalX = parseInt(this.#element.getAttribute('x'))
-    this.#originalY = parseInt(this.#element.getAttribute('y'))
-    this.#orginalRadius = parseInt(this.#element.getAttribute('r'))
+    this.#originalX = this.#toInt(this.#element.getAttribute('x'))
+    this.#originalY = this.#toInt(this.#element.getAttribute('y'))
+    this.#orginalRadius = this.#toInt(this.#element.getAttribute('r'))
+  }
+
+  /**
+   * Converts a string to an integer.
+   *
+   * @param {string} value - The value to convert.
+   * @returns {number} - The value as an integer.
+   */
+  #toInt (value) {
+    return parseInt(value)
   }
 
   /**
@@ -81,7 +90,6 @@ class Interactivity {
         } else if (this.#isCircle(event.target.tagName)) {
           this.#makeCircleInteractive(event)
         }
-        this.#eventTarget = event.target.tagName
       }
     })
 

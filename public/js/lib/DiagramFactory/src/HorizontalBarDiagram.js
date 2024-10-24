@@ -44,7 +44,7 @@ class HorizontalBarDiagram extends GraphDiagram {
    */
   render () {
     for (let i = 0; i < this.#visualData.length; i++) {
-      const barHeigth = this.#calcBarHeight(i)
+      const barHeigth = this.#calcBarHeight(this.#visualData[i].value)
       const xCoordinate = this.#calcXCoord(i)
 
       const yCoordinate = this.#calcYCoord(barHeigth)
@@ -73,13 +73,13 @@ class HorizontalBarDiagram extends GraphDiagram {
   /**
    * Calculates the height of a bar in a horizontal bar diagram based on the data value and maximum data value.
    *
-   * @param {number} index - The index of the data point in the visual data array.
+   * @param {number} value - The data value of the bar.
    * @returns {number} - The calculated height of the bar.
    */
-  #calcBarHeight (index) {
+  #calcBarHeight (value) {
     const MARGIN_TOP = 50
 
-    const barHeight = (this.#visualData[index].value / this.#maxDataValue) * (this.#svgHeight - MARGIN_TOP)
+    const barHeight = (value / this.#maxDataValue) * (this.#svgHeight - MARGIN_TOP)
 
     return barHeight
   }
