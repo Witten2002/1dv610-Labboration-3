@@ -1,81 +1,79 @@
-# Priems Conditori Application
-
-Welcome to the Priem's Conditori Application README file! This comprehensive guide provides an overview of the application, its features, and how to utilize it effectively. Whether you're a bakery owner, an administrator, or a customer, this README will help you understand and navigate the Priem's Conditori Application.
-
-## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Features](#features)
-3. [Getting Started](#getting-started)
-4. [Admin Guide](#admin-guide)
-5. [Customer Guide](#customer-guide)
-6. [Technology Stack and Architecture](#technology-stack-and-architecture)
+# DiagramFactory
 
 ## Introduction
 
-Priems Conditori Application is a versatile web-based platform tailored specifically for a local bakery in Nybro. It's designed to simplify product management, event coordination, and customer engagement. With intuitive interfaces and powerful features, it empowers bakery owners to showcase their products, promote events, and enhance customer experience.
+DiagramFactory is a web-based application that allows users to create, edit, and share diagrams. It provides a user-friendly interface for designing various types of diagrams, such as Bar, Line and Circle diagrams. With a wide range of tools and customization options, users can easily create professional-looking diagrams for personal or professional use. We show some examples of our diagrams on the page **Diagrams** where you can read some information about Nvidia and see their revenue the past years. You can also create your own diagrams by clicking on the **Create Diagram** page.
 
 ## Features
 
-### 1. Product Management
-- **Add Products:** Easily upload images, provide titles, descriptions, and select product types.
-- **Edit and Remove Products:** Update product details or remove listings as needed.
+- Create different types of diagrams (e.g Bar, Line, Circle)
+- Customize the appearance of diagrams with colors and labels
+- Save created diagrams to your computer as an SVG file
+- Simple and intuitive user interface
 
-### 2. Event Coordination
-- **Schedule Events:** Plan upcoming events such as Mother's Day, Midsummer, and special offers.
-- **Set Event Dates:** Choose event dates and specify any associated promotions.
+## Usage
+1. Visit the website: Navigate to the website and follow the on screen instructions to create a new diagram.
+2. Customize your data: Input your data and adjust the settings to create the desired visualization.
+3. Create diagrams: Click "Create Diagram" to generate a chart based on the data you provide.
+4. Save diagrams: Download the diagram as an SVG file directly to your computer.
 
-### 3. Admin Dashboard
-- **Monitor Performance:** Track sales trends, analyze inventory levels, and view user engagement metrics.
-- **Manage Listings:** Efficiently handle product and event listings, ensuring accuracy and relevance.
+## Screenshots
 
-### 4. Customer Experience
-- **Browse Products:** Customers can easily browse through available products with detailed descriptions and images.
-- **Stay Informed:** Receive updates on upcoming events and special offers to stay engaged with the bakery.
+<img src="./readmeIMG/home.png" alt="Example Diagram" width="600" height="300">
+<img src="./readmeIMG/creatediagram.png" alt="Example Diagram" width="600" height="300">
+<img src="./readmeIMG/createBardiagram.png" alt="Example Diagram" width="600" height="300">
+<img src="./readmeIMG/download.png" alt="Example Diagram" width="600" height="300">
 
-## Getting Started
+## Technical Information
+- Technologies: HTML, CSS, JavaScript (express, SSR)
+- Diagram Creation: The diagrams are dynamically generated using SVG elements and offer both static and interactive visualizations.
 
-To access the Priem's Conditori Application:
+## Known Issues
+- The saved diagrams dont have the ability to be interactive and animated when downloaded as an SVG file.
+- The application is not optimized for mobile devices and may not display correctly on smaller screens.
 
-1. Visit the application's website: [https://priemsconditori.se](https://priemsconditori.se).
-2. If you're an administrator, log in to the admin dashboard using your credentials. Visit [Admin Dashboard](https://priemsconditori.se/admin) and enter your login credentials.
-3. If you're a customer, simply browse the website to explore products and events.
+## Installation on server
+#### Requirements:
+- Node.js [GUIDE](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
+- Nginx [GUIDE](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04)
+- Pm2 [GUIDE](https://www.digitalocean.com/community/tutorials/how-to-use-pm2-to-setup-a-node-js-production-environment-on-an-ubuntu-vps)
+- API KEY from [Financemodelingprep](https://site.financialmodelingprep.com/developer/docs)
 
-![Customer](readme/img/image.png)
+#### Place the Files:
+1. Navigate to /var/www/
+2. Create a new map.
+3. Place the project files in the new map.
 
-## Admin Guide
+#### Environment variables:
+- Create a file called `ecosystem.config.js` in the root directory with the following content.
+- Add the variables:
+  - **PORT**: With the correct port number
+  - **BASE_URL**: With the correct base url
+  - **API_KEY**: Api key for the api **Financemodelingprep**
 
-As an administrator, you have access to additional features for managing the bakery's offerings:
+##### Example:
+```javascript
+module.exports = {
+  apps: [{
+    name: "DiagramFactory",
+    script: "./src/server.js",
+    env: {
+      PORT: 3000,
+      BASE_URL: "http://example.com",
+      API_KEY: "your_api_key_here"
+    }
+  }]
+}
+```
 
-- **Adding Products:** Navigate to the admin dashboard to add new products with images, titles, descriptions, and types.
-- **Scheduling Events:** Plan upcoming events by specifying dates and any associated promotions.
+#### Nginx:
+Create a new path in the Nginx configuration file. With the same port as the port in the environment variables.
 
-![Admin](readme/img/imageAdmin.png)
+#### Start the application:
+1. Navigate to the root directory of the project.
+2. Run the command `npm install`
+3. Run the command `pm2 start ecosystem.config.js`
 
-## Customer Guide
+## License
 
-Customers can utilize the Priem's Conditori Application to:
-
-- **Explore Products:** Browse through a wide range of bakery products with detailed descriptions and images.
-- **Stay Updated:** Keep track of upcoming events and special offers to make the most of their bakery experience.
-
-## Technology Stack and Architecture
-
-### Frontend:
-- **Tailwind CSS:** A utility-first CSS framework used for styling components and UI elements, providing rapid development and easy customization of styles.
-- **JavaScript:** The primary programming language for frontend interactivity and dynamic content generation.
-- **Flowbite Components:** Pre-designed components and layouts from Flowbite are utilized to enhance the visual aesthetics and user experience of the frontend.
-
-### Backend:
-- **Node.js and Express.js:** The backend of the application is built using Node.js as the runtime environment and Express.js as the web application framework. This combination offers flexibility and control over server-side logic and routing.
-- **Server-Side Rendering (SSR):** The application employs server-side rendering to generate HTML pages dynamically on the server before sending them to the client. This approach enhances performance and SEO by delivering fully rendered pages to the user's browser.
-- **MongoDB:** A NoSQL database used for storing product and upcoming event data. MongoDB's flexibility and scalability make it ideal for managing diverse data types and dynamic schemas.
-- **Firebase:** Firebase is utilized for user authentication, providing secure login functionality. Additionally, Firebase handles analytics tracking and picture storage, offering a comprehensive solution for user management and data storage needs.
-
-### Architecture:
-- The application follows a client-server architecture, with frontend and backend components separated for modularity and scalability.
-- Frontend components are built using Tailwind CSS, JavaScript, and Flowbite components, providing a responsive and visually appealing user interface.
-- Backend functionality, including data storage and user authentication, is implemented using Node.js and Express.js, with MongoDB and Firebase serving as the primary data storage and user management systems, respectively.
-- Server-side rendering is employed to generate HTML pages dynamically on the server, enhancing performance and SEO by delivering fully rendered pages to the client's browser.
-
-![Architecture](readme/img/Priems-SystemDesign.png)
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.

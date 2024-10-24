@@ -1,18 +1,18 @@
 /**
- * KOMMENTAR FÖR MODULEN
+ * A module that fetches and stores Nvidia historical data.
  *
  * @author Ludwig Wittenberg <lw223cq@student.lnu.se>
  * @version 1.0.0
  */
 
 /**
- * A class to fetch and store COVID-19 historical data.
+ * A class which fetches Nvidia historical data.
  */
 class FinanceFetcher {
   #data
 
   /**
-   * Fetches COVID-19 historical data for the last 4 days.
+   * Fetches Nvidia historical data.
    *
    * @async
    * @throws {Error} If the fetch request fails.

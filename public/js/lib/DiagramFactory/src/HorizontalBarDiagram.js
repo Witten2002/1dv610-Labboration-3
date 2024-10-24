@@ -13,6 +13,13 @@ import { diagramTypes } from './config/DiagramTypes.js'
  */
 class HorizontalBarDiagram extends GraphDiagram {
   #dataObject
+  #svg
+  #barWidth
+  #barSpacing
+  #svgHeight
+  #maxDataValue
+  #xCoodinates
+  #visualData
   /**
    * Creates an instance of BarDiagram.
    *
@@ -21,6 +28,13 @@ class HorizontalBarDiagram extends GraphDiagram {
   constructor (config) {
     super(config)
     this.#dataObject = super.getDataObject()
+    this.#svg = super.getSvg()
+    this.#barWidth = this.#dataObject.config.barWidth
+    this.#barSpacing = this.#dataObject.config.barSpacing
+    this.#svgHeight = super.getSvgHeight()
+    this.#maxDataValue = super.getMaxValue()
+    this.#xCoodinates = []
+    this.#visualData = super.getVisualData()
   }
 
   /**
@@ -29,44 +43,75 @@ class HorizontalBarDiagram extends GraphDiagram {
    * @override
    */
   render () {
-    const svg = super.getSvg()
-    const barWidth = this.#dataObject.config.barWidth
-    const barSpacing = this.#dataObject.config.barSpacing
-    const svgHeight = super.getSvgHeight()
-    const maxDataValue = super.getMaxValue()
+    for (let i = 0; i < this.#visualData.length; i++) {
+      const barHeigth = this.#calcBarHeight(i)
+      const xCoordinate = this.#calcXCoord(i)
 
-    const xCoodinates = []
-
-    const visualData = super.getVisualData()
-    const MARGIN_TOP = 50
-    const MARGIN_LEFT = 50
-    const MARGIN_BOTTOM = 30
-
-    for (let i = 0; i < visualData.length; i++) {
-      const barHeigth = (visualData[i].value / maxDataValue) * (svgHeight - MARGIN_TOP)
-      const xCoordinate = i * (barWidth + barSpacing) + MARGIN_LEFT
-      xCoodinates.push(xCoordinate)
-      const yCoordinate = svgHeight - barHeigth - MARGIN_BOTTOM
+      const yCoordinate = this.#calcYCoord(barHeigth)
 
       const config = {
         xCoordinate,
         yCoordinate,
-        barWidth,
+        barWidth: this.#barWidth,
         barHeigth,
-        svgHeight,
-        visualData: visualData[i]
+        svgHeight: this.#svgHeight,
+        visualData: this.#visualData[i]
       }
 
       const rect = this.#createBar(config)
 
       this.#createInteractivity(rect, config)
 
-      svg.appendChild(rect)
+      this.#svg.appendChild(rect)
 
       const text = this.#createLabel(config)
 
-      svg.appendChild(text)
+      this.#svg.appendChild(text)
     }
+  }
+
+  /**
+   * Calculates the height of a bar in a horizontal bar diagram based on the data value and maximum data value.
+   *
+   * @param {number} index - The index of the data point in the visual data array.
+   * @returns {number} - The calculated height of the bar.
+   */
+  #calcBarHeight (index) {
+    const MARGIN_TOP = 50
+
+    const barHeight = (this.#visualData[index].value / this.#maxDataValue) * (this.#svgHeight - MARGIN_TOP)
+
+    return barHeight
+  }
+
+  /**
+   * Calculates the x-coordinate for a bar in a horizontal bar diagram based on its index.
+   *
+   * @param {number} index - The index of the bar in the data array.
+   * @returns {number} - The calculated x-coordinate of the bar.
+   */
+  #calcXCoord (index) {
+    const MARGIN_LEFT = 50
+
+    const xCoordinate = index * (this.#barWidth + this.#barSpacing) + MARGIN_LEFT
+
+    this.#xCoodinates.push(xCoordinate)
+
+    return xCoordinate
+  }
+
+  /**
+   * Calculates the y-coordinate for a bar in a horizontal bar diagram based on its height.
+   *
+   * @param {number} barHeight - The height of the bar.
+   * @returns {number} - The calculated y-coordinate of the bar.
+   */
+  #calcYCoord (barHeight) {
+    const MARGIN_BOTTOM = 30
+
+    const yCoordinate = this.#svgHeight - barHeight - MARGIN_BOTTOM
+
+    return yCoordinate
   }
 
   /**
@@ -107,6 +152,7 @@ class HorizontalBarDiagram extends GraphDiagram {
    * Creates an SVG text element to display a label for a horizontal bar.
    *
    * @param {object} config - The data structure.
+   * @returns {SVGTextElement} The created SVG text element displaying the label.
    */
   #createLabel (config) {
     const MARGINS_RIGHT = 2

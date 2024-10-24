@@ -52,6 +52,11 @@ class DataObject {
     this.#createObject()
   }
 
+  /**
+   * Sets the shadow root.
+   *
+   * @param {object} shadowRoot - The shadow root to set.
+   */
   #setShadowRoot (shadowRoot) {
     this.#shadowRoot = shadowRoot
   }
@@ -101,6 +106,12 @@ class DataObject {
     }
   }
 
+  /**
+   * Checks if the show grid decoration is valid.
+   *
+   * @param {boolean} showGrid - The show grid decoration to check.
+   * @returns {boolean} - Returns true if the show grid decoration is valid, otherwise false.
+   */
   #isValidShowGridDecoration (showGrid) {
     return showGrid !== undefined && this.#isBoolean(showGrid)
   }
@@ -175,6 +186,21 @@ class DataObject {
     if (!this.#svg) {
       throw new Error('No element found.')
     }
+
+    if (!this.#isEmpty()) {
+      throw new Error('The svg is not empty.')
+    }
+  }
+
+  /**
+   * Checks if the SVG element is empty.
+   *
+   * @returns {boolean} - Returns true if the SVG element has no child nodes, otherwise false.
+   */
+  #isEmpty () {
+    const EMPTY = 0
+
+    return this.#svg.childNodes.length === EMPTY
   }
 
   /**
@@ -286,6 +312,12 @@ class DataObject {
     return this.#isNull(data.value) || this.#isUndefined(data.value) || data.value === ''
   }
 
+  /**
+   * Checks if the given value is null.
+   *
+   * @param {*} element - The value to check.
+   * @returns {boolean} - Returns true if the value is null, otherwise false.
+   */
   #isNull (element) {
     return element === null
   }
@@ -316,6 +348,12 @@ class DataObject {
     }
   }
 
+  /**
+   * Checks if the given value is undefined.
+   *
+   * @param {*} element - The value to check.
+   * @returns {boolean} - Returns true if the value is undefined, otherwise false.
+   */
   #isUndefined (element) {
     return element === undefined
   }

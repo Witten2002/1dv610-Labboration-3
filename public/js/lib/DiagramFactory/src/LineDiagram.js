@@ -13,7 +13,8 @@ import { diagramTypes } from './config/DiagramTypes.js'
  */
 class LineDiagram extends GraphDiagram {
   #dataObject
-  #visualData
+  #svgWidth
+  #maxDataValue
 
   /**
    * Creates an instance of LineDiagram.
@@ -23,7 +24,8 @@ class LineDiagram extends GraphDiagram {
   constructor (config) {
     super(config)
     this.#dataObject = super.getDataObject()
-    this.#visualData = super.getVisualData()
+    this.#svgWidth = super.getSvgWidth()
+    this.#maxDataValue = super.getMaxValue()
   }
 
   /**
@@ -56,25 +58,47 @@ class LineDiagram extends GraphDiagram {
    * @returns {Array<string>} An array of points in the format "x,y" for the line diagram.
    */
   #createPoints (config) {
-    let yCoordinate
-    let xCoordinate
-    const svgWidth = super.getSvgWidth()
-    const maxDataValue = super.getMaxValue()
-
     const points = []
 
-    const PADDING_X = 100
-    const MARGIN_LEFT = 75
-    const PADDING_Y = 50
-    const MARGIN_BOTTOM = 30
-
     for (let i = 0; i < config.visualData.length; i++) {
-      xCoordinate = (i / config.visualData.length) * (svgWidth - PADDING_X) + MARGIN_LEFT
-      yCoordinate = config.svgHeight - (config.visualData[i].value / maxDataValue) * (config.svgHeight - PADDING_Y) - MARGIN_BOTTOM
+      const xCoordinate = this.#calcXCoord(i, config)
+      const yCoordinate = this.#calcYCoord(i, config)
       points.push(`${xCoordinate},${yCoordinate}`)
     }
 
     return points
+  }
+
+  /**
+   * Calculates the x-coordinate for a point in a line diagram based on its index and configuration.
+   *
+   * @param {number} index - The index of the data point in the visual data array.
+   * @param {object} config - The configuration object containing visual data and other settings.
+   * @returns {number} - The calculated x-coordinate of the point.
+   */
+  #calcXCoord (index, config) {
+    const PADDING_X = 100
+    const MARGIN_LEFT = 75
+
+    const xCoordinate = (index / config.visualData.length) * (this.#svgWidth - PADDING_X) + MARGIN_LEFT
+
+    return xCoordinate
+  }
+
+  /**
+   * Calculates the y-coordinate for a point in a line diagram based on its index and configuration.
+   *
+   * @param {number} index - The index of the data point in the visual data array.
+   * @param {object} config - The configuration object containing visual data and other settings.
+   * @returns {number} - The calculated y-coordinate of the point.
+   */
+  #calcYCoord (index, config) {
+    const PADDING_Y = 50
+    const MARGIN_BOTTOM = 30
+
+    const yCoordinate = config.svgHeight - (config.visualData[index].value / this.#maxDataValue) * (config.svgHeight - PADDING_Y) - MARGIN_BOTTOM
+
+    return yCoordinate
   }
 
   /**
@@ -107,7 +131,7 @@ class LineDiagram extends GraphDiagram {
       const xCoord = coords[0]
       const yCoord = coords[1]
 
-      this.#createLabel(xCoord, config, config.visualData[i].label,)
+      this.#createLabel(xCoord, config, config.visualData[i].label)
 
       const circle = this.#createCircle(xCoord, yCoord)
 

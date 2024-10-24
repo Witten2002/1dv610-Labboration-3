@@ -6,6 +6,7 @@
  */
 import { PATH, VIEWS } from '../config/Paths.js'
 import { DIAGRAM_TYPES } from '../config/DiagramTypes.js'
+import { FakeData } from '../models/FakeData.js'
 
 /**
  * Encapsulates a controller.
@@ -20,31 +21,14 @@ export class HomeController {
    * @param {Function} next - Express next middleware function.
    */
   index (req, res, next) {
-    const fakeData = this.#createFakeData()
+    const fakeData = new FakeData()
 
     const sendToView = {
-      data: fakeData
+      data: fakeData.getFakeData()
     }
 
     const viewData = JSON.stringify(sendToView)
 
     res.render(VIEWS.HOME, { PATH, DIAGRAM_TYPES, viewData })
-  }
-
-  /**
-   * Creates a list of fake data to display our diagrams.
-   *
-   * @returns {Array} A list of fake data to show on the home screen.
-   */
-  #createFakeData () {
-    const fakeData = [
-      { label: '2019', value: 10, color: 'blue' },
-      { label: '2020', value: 13, color: 'red' },
-      { label: '2021', value: 18, color: 'yellow' },
-      { label: '2022', value: 15, color: 'pink' },
-      { label: '2023', value: 25, color: 'green' }
-    ]
-
-    return fakeData
   }
 }

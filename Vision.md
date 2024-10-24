@@ -1,24 +1,3 @@
-  HuvudSyfte
-  Låta användaren skapa diagram med olika data.
-
-  Målgrupp:
-  Användare som vill skapa diagram.
-
-  Huvudfunktioner:
-  Skapa diagram med olika data.
-  Spara diagram på datorn.
-  Anpassningsbara visualiseringar.
-  Stöd för olika diagramtyper.
-
-  Mål: 
-  Underlättar vid dataanalys och visualisering utav data.
-
 # Vision
-Denna applikation är utvecklad för att underlätta för användaren att skapa diagram med olika data. Användaren ska kunna skapa diagram med olika data och spara dessa lokalt på datorn. Applikationen ska ha stöd för olika diagramtyper och visualiseringar.
 
-# Krav
-
-- Skapa Diagram.
-- Spara Diagram.
-- Anpassningsbara visualiseringar.
-- Stöd för olika diagramtyper.
+Denna applikation är utvecklad för att ge användare ett kraftfullt och lättanvänt verktyg för att skapa diagram baserat på deras egna data. Genom ett användarvänligt gränssnitt och flexibla visualiseringsalternativ kan användaren snabbt och enkelt skapa anpassningsbara diagram för olika syften, såsom dataanalys eller presentationer. Applikationen stödjer flera diagramtyper och erbjuder möjligheten att spara skapade diagram lokalt på användarens dator för vidare användning. Målet är att göra dataanalys och visualisering mer tillgänglig och intuitiv för alla användare, oavsett teknisk bakgrund.

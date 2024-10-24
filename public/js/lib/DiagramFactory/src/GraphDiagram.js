@@ -113,8 +113,8 @@ class GraphDiagram extends Diagram {
    * @param {object} config - The datastructure for the method.
    */
   #createXAxel (config) {
-    const X_AXIS_START_OFFSET = 10;
-    const Y_AXIS_POSITION = 20;
+    const X_AXIS_START_OFFSET = 10
+    const Y_AXIS_POSITION = 20
 
     const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     xAxis.setAttribute('x1', config.axisPadding - X_AXIS_START_OFFSET)
@@ -132,8 +132,8 @@ class GraphDiagram extends Diagram {
    * @param {object} config - The datastructure for the method.
    */
   #createYAxel (config) {
-    const X_AXIS_START_OFFSET = 10;
-    const Y_AXIS_POSITION = 30;
+    const X_AXIS_START_OFFSET = 10
+    const Y_AXIS_POSITION = 30
     const X_AXIS_END = 20
 
     const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line')
@@ -146,7 +146,7 @@ class GraphDiagram extends Diagram {
     config.svg.appendChild(yAxis)
   }
 
-    /**
+  /**
    * Creates lines and values.
    *
    * @param {object} config - The datastructure for the method.
@@ -173,6 +173,14 @@ class GraphDiagram extends Diagram {
     }
   }
 
+  /**
+   * Calculates the Y-coordinate for a given index.
+   *
+   * @param {object} config - The datastructure for the method.
+   * @param {number} index - The index of the value.
+   * @param {number} numOfLines - The number of lines.
+   * @returns {number} - The calculated Y-coordinate.
+   */
   #calculateYPos (config, index, numOfLines) {
     return config.svgHeight - config.axisPadding - (index * (config.svgHeight - config.axisPadding) / numOfLines)
   }
@@ -184,8 +192,8 @@ class GraphDiagram extends Diagram {
    * @returns {SVGTextElement} The created SVG text element displaying the Y-axis label.
    */
   #createYLabel (labelConfig) {
-    const X_AXIS_START_OFFSET = 15;
-    const Y_AXIS_POSITION = 25;
+    const X_AXIS_START_OFFSET = 15
+    const Y_AXIS_POSITION = 25
 
     const label = document.createElementNS('http://www.w3.org/2000/svg', 'text')
     label.setAttribute('x', labelConfig.axisPadding - X_AXIS_START_OFFSET)
@@ -201,11 +209,12 @@ class GraphDiagram extends Diagram {
    * Creates an SVG line element to represent a grid line in the diagram.
    *
    * @param {object} labelConfig - The datastructure for the method.
+   * @param {number} svgWidth - The width of the SVG element.
    * @returns {SVGLineElement} The created SVG line element representing the grid line.
    */
   #createGrid (labelConfig, svgWidth) {
-    const X_AXIS_START_OFFSET = 10;
-    const Y_AXIS_POSITION = 20;
+    const X_AXIS_START_OFFSET = 10
+    const Y_AXIS_POSITION = 20
 
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     line.setAttribute('x1', labelConfig.axisPadding - X_AXIS_START_OFFSET)

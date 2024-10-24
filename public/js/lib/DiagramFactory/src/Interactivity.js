@@ -43,8 +43,7 @@ class Interactivity {
    * Makes the bars interactive.
    *
    * @param {object} dataObject - The settings for the interactivity.
-   * @param {object} visualData - The index of the bars.
-   * @param {string} type - The type of the diagram.
+   * @param {object} config - The settings for the interactivity.
    */
   makeInteractive (dataObject, config) {
     // currently not working with circle/path diagrams
@@ -116,7 +115,7 @@ class Interactivity {
   #makeHorizontalBarInteractivity (event) {
     const GROW = 10
     const POSITION = 5
-  
+
     event.target.style.transition = 'width 0.5s ease, height 0.5s ease, x 0.5s ease, y 0.5s ease'
     event.target.setAttribute('width', this.#originalWidth + GROW)
     event.target.setAttribute('height', this.#originalHeight + GROW)
@@ -202,8 +201,11 @@ class Interactivity {
   #moveInfoBox (event) {
     const MOVE = 10
 
-    this.#infoBox.style.top = `${event.clientY + MOVE}px`
-    this.#infoBox.style.left = `${event.clientX + MOVE}px`
+    const scrollTop = window.scrollY
+    const scrollLeft = window.scrollX
+
+    this.#infoBox.style.top = `${event.clientY + scrollTop + MOVE}px`
+    this.#infoBox.style.left = `${event.clientX + scrollLeft + MOVE}px`
   }
 
   /**

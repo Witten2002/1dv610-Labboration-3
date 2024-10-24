@@ -1,5 +1,5 @@
 /**
- * KOMMENTAR FÖR MODULEN
+ * Enum for diagram types.
  *
  * @author Ludwig Wittenberg <lw223cq@student.lnu.se>
  * @version 1.0.0

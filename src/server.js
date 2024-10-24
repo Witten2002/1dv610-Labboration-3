@@ -7,15 +7,10 @@
 
 import express from 'express'
 import expressLayouts from 'express-ejs-layouts'
-// import session from 'express-session'
 import logger from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-// import { connectToDatabase } from './config/mongoose.js'
-// import { sessionOptions } from './config/sessionOptions.js'
 import { router } from './routes/router.js'
-
-// await connectToDatabase()
 
 const app = express()
 const dirFullName = dirname(fileURLToPath(import.meta.url))
@@ -37,14 +32,7 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1)
 }
 
-//   app.use(session(sessionOptions))
-
 app.use((req, res, next) => {
-  // if (req.session.flash) {
-  //   res.locals.flash = req.session.flash
-  //   delete req.session.flash
-  // }
-
   res.locals.baseURL = baseURL
 
   next()

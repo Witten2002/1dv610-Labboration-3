@@ -12,25 +12,25 @@ customElements.define('my-create-data-component',
    * Extends the HTMLElement
    */
   class extends HTMLElement {
-  #labelBox
-  #valueBox
-  #colorBox
-  #boundLabelBox
-  #boundValueBox
-  #boundColorBox
-  #label
-  #value
-  #color
-  #submitBtn
-  #boundSubmitBtn
-  #removeBtn
-  #boundremoveBtn
-    
+    #labelBox
+    #valueBox
+    #colorBox
+    #boundLabelBox
+    #boundValueBox
+    #boundColorBox
+    #label
+    #value
+    #color
+    #submitBtn
+    #boundSubmitBtn
+    #removeBtn
+    #boundremoveBtn
+
     /**
      * Creates an instance of the custom element and attaches a shadow DOM.
      */
     constructor () {
-      super();
+      super()
       this.attachShadow({ mode: 'open' })
       this.shadowRoot.appendChild(template.content.cloneNode(true))
 
@@ -40,23 +40,52 @@ customElements.define('my-create-data-component',
       this.#submitBtn = this.shadowRoot.querySelector('#submitBtn')
       this.#removeBtn = this.shadowRoot.querySelector('#deleteBtn')
     }
-    
+
     /**
      * Called when the element is connected to the DOM.
      */
     connectedCallback () {
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       this.#labelBox.addEventListener('input', this.#boundLabelBox = (event) => this.#setLabel())
 
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       this.#valueBox.addEventListener('input', this.#boundValueBox = (event) => this.#setValue())
 
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       this.#colorBox.addEventListener('input', this.#boundColorBox = (event) => this.#setColor())
 
-      this.#submitBtn.addEventListener('click', this.#boundSubmitBtn = (event => this.#sendForm(event)))
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
+      this.#submitBtn.addEventListener('click', this.#boundSubmitBtn = (event) => this.#sendForm(event))
 
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       this.#removeBtn.addEventListener('click', this.#boundremoveBtn = (event) => this.#sendRemoveForm(event))
-
     }
-    
+
     /**
      * Called when the element is disconnected from the DOM.
      */
@@ -123,7 +152,7 @@ customElements.define('my-create-data-component',
      */
     #sendForm (event) {
       event.preventDefault()
-  
+
       if (this.#label && this.#value && this.#color) {
         this.dispatchEvent(new CustomEvent('create:data:component:data', {
           detail: {

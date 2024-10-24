@@ -11,7 +11,7 @@ import '../my-showDiagram/index.js'
 import { DIAGRAM_TYPES } from './config/DiagramTypes.js'
 
 customElements.define('my-create-diagram',
-    /**
+  /**
    * Extends the HTMLElement
    */
   class extends HTMLElement {
@@ -35,12 +35,12 @@ customElements.define('my-create-diagram',
     #boundSvgBtn
     #form
     #placeForDiagram
-    
+
     /**
      * Creates an instance of the custom element and attaches a shadow DOM.
      */
     constructor () {
-      super();
+      super()
       this.attachShadow({ mode: 'open' })
       this.shadowRoot.appendChild(template.content.cloneNode(true))
 
@@ -61,22 +61,52 @@ customElements.define('my-create-diagram',
       // start with one box
       this.#addNewInputBox()
     }
-    
+
     /**
      * Called when the element is connected to the DOM.
      */
     connectedCallback () {
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       this.#addNewInputBtn.addEventListener('click', this.#boundAddNewInputBtn = (event) => this.#addNewInputBox())
 
-      this.#diagramChooser.addEventListener('input',  this.#boundDiagramChooser = (event) => this.#chooseDiagram())
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
+      this.#diagramChooser.addEventListener('input', this.#boundDiagramChooser = (event) => this.#chooseDiagram())
 
-      this.#renderDiagramBtn.addEventListener('click', this.#boundDiagramChooser = (event => this.#renderDiagram(event)))
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
+      this.#renderDiagramBtn.addEventListener('click', this.#boundDiagramChooser = (event) => this.#renderDiagram(event))
 
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       this.#backBtn.addEventListener('click', this.#boundBackBtn = (event) => this.#backToPageOne(event))
 
+      /**
+       * Adds event listeners to various buttons and elements for handling user interactions.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       this.#svgBtn.addEventListener('click', this.#boundSvgBtn = (event) => this.#downloadSvg(event))
     }
-    
+
     /**
      * Called when the element is disconnected from the DOM.
      */
@@ -101,8 +131,24 @@ customElements.define('my-create-diagram',
     #addNewInputBox () {
       const newInputElement = document.createElement('my-create-data-component')
 
-      newInputElement.addEventListener('create:data:component:data', this.#boundCustomDataElement = (event => this.#submitData(event)))
+      /**
+       * Adds event listeners to the new input element for custom data creation and removal.
+       * The `create:data:component:data` event triggers the `#submitData` method,
+       * and the `remove:data:component:data` event triggers the `#removeCustomData` method.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
+      newInputElement.addEventListener('create:data:component:data', this.#boundCustomDataElement = (event) => this.#submitData(event))
 
+      /**
+       * Adds event listeners to the new input element for custom data creation and removal.
+       * The `create:data:component:data` event triggers the `#submitData` method,
+       * and the `remove:data:component:data` event triggers the `#removeCustomData` method.
+       *
+       * @param {CustomEvent} event - The custom event containing the data to be submitted.
+       * @returns {void}
+       */
       newInputElement.addEventListener('remove:data:component:data', this.#boundCustomDataElement = (event) => this.#removeCustomData(event))
 
       this.#dataWrapper.append(newInputElement)
@@ -117,7 +163,7 @@ customElements.define('my-create-diagram',
     #submitData (event) {
       this.#customData.push(event.detail.data)
 
-      this.#showDiagramOptions() 
+      this.#showDiagramOptions()
     }
 
     /**
@@ -125,7 +171,7 @@ customElements.define('my-create-diagram',
      * If the customData array is empty, the form is hidden. Otherwise, the form is shown.
      */
     #showDiagramOptions () {
-      if (this.#customData.length <= 0) {
+      if (this.#customData.length <= 1) {
         this.#form.classList.add('hidden')
       } else {
         this.#form.classList.remove('hidden')
@@ -145,19 +191,19 @@ customElements.define('my-create-diagram',
 
       this.#customData.splice(index, 1)
 
-      this.#showDiagramOptions() 
+      this.#showDiagramOptions()
     }
 
     /**
      * Finds the index of the specified data object in the customData array.
      *
-     * @param {Object} dataToRemove - The data object to find in the customData array.
+     * @param {object} dataToRemove - The data object to find in the customData array.
      * @returns {number} The index of the data object in the customData array, or -1 if not found.
      */
     #findIdex (dataToRemove) {
-      const index = this.#customData.findIndex(item => 
-        item.label === dataToRemove.label && 
-        item.value === dataToRemove.value && 
+      const index = this.#customData.findIndex(item =>
+        item.label === dataToRemove.label &&
+        item.value === dataToRemove.value &&
         item.color === dataToRemove.color
       )
 
@@ -271,16 +317,11 @@ customElements.define('my-create-diagram',
      * Retrieves the SVG element from the `my-show-diagram` component's shadow DOM.
      * If the SVG element is not found, an alert is shown to the user.
      *
-     * @returns {SVGElement|null} The SVG element if found, otherwise null.
+     * @returns {SVGElement|null} The SVG element from the `my-show-diagram` component's shadow DOM, or null if not found.
      */
     #getSvgElement () {
       const parentElement = this.shadowRoot.querySelector('my-show-diagram')
       const svgElement = parentElement.shadowRoot.querySelector('svg')
-
-      if (!svgElement) {
-        alert("SVG-elementet hittades inte.");
-        return;
-      }
 
       return svgElement
     }
@@ -295,7 +336,7 @@ customElements.define('my-create-diagram',
     #createSvgUrl (svgElement) {
       const svgData = new XMLSerializer().serializeToString(svgElement)
 
-      const svgUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+      const svgUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData)
 
       return svgUrl
     }
@@ -325,6 +366,11 @@ customElements.define('my-create-diagram',
       downloadLink.setAttribute('download', fileName)
     }
 
+    /**
+     * Appends the download link to the shadow DOM, clicks the link to start the download.
+     *
+     * @param {HTMLAnchorElement} downloadLink - The anchor element configured for downloading the SVG.
+     */
     #startDownload (downloadLink) {
       this.shadowRoot.append(downloadLink)
 

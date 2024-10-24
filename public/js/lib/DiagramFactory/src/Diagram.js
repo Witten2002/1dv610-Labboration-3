@@ -127,7 +127,7 @@ class Diagram {
       const animate = new Animation(config.element)
 
       const speed = objectData.config.animation.speed
-    
+
       animate.startAnimation(config, speed)
     }
   }

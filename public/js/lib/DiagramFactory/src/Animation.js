@@ -26,6 +26,7 @@ class Animation {
    * Animate the diagram.
    *
    * @param {object} config - The configuration of the animation.
+   * @param {number} speed - The speed of the animation.
    */
   startAnimation (config, speed) {
     if (this.#isHorizontal(config.type)) {
@@ -33,6 +34,12 @@ class Animation {
     }
   }
 
+  /**
+   * Checks if the diagram type is horizontal.
+   *
+   * @param {string} type - The type of the diagram.
+   * @returns {boolean} - Returns true if the diagram type is horizontal, otherwise false.
+   */
   #isHorizontal (type) {
     return type === diagramTypes.HORIZONTAL_BAR
   }
@@ -40,8 +47,7 @@ class Animation {
   /**
    * Animates the each bar of the diagram.
    *
-   * @param {number} finalHeight - The final height of the bar.
-   * @param {number} finalY - The final y position of the bar.
+   * @param {object} config - The configuration of the animation.
    * @param {number} speed - The speed of the animation.
    */
   #animateHorizontalBar (config, speed) {

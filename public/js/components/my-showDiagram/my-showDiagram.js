@@ -37,7 +37,7 @@ customElements.define('my-show-diagram',
      * @returns {string[]} The list of attributes to be observed.
      */
     static get observedAttributes () {
-      return [ATTRIBUTES.HEIGHT , ATTRIBUTES.WIDTH, ATTRIBUTES.DATA, ATTRIBUTES.TYPE]
+      return [ATTRIBUTES.HEIGHT, ATTRIBUTES.WIDTH, ATTRIBUTES.DATA, ATTRIBUTES.TYPE]
     }
 
     /**
@@ -93,8 +93,8 @@ customElements.define('my-show-diagram',
 
     /**
      * Will choose the correct diagram.
-     * 
-     * @param {string} type - What type of diagram we want to display. 
+     *
+     * @param {string} type - What type of diagram we want to display.
      */
     #renderDiagram (type) {
       if (type === DIAGRAM_TYPES.HORIZONTAL_BAR) {

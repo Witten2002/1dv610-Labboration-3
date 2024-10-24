@@ -48,43 +48,29 @@ class CircleDiagram extends Diagram {
 
   /**
    * Creates and appends SVG path elements representing sections of a circle diagram.
-   * !!! COPILOT HELPT ME WITH THE CALCULATIONS !!!
    *
    * @param {number} svgWidth - The width of the SVG element.
    * @param {number} svgHeight - The height of the SVG element.
    * @param {SVGSVGElement} svg - The SVG element to append the path elements to.
    */
   #createEachPath (svgWidth, svgHeight, svg) {
-    const DIVIDED = 2
-    const PADDING = 30
-
-    const radius = Math.min(svgWidth, svgHeight) / DIVIDED - PADDING
-    const centerX = svgWidth / DIVIDED
-    const centerY = svgHeight / DIVIDED
+    const context = this.#createContext(svgWidth, svgHeight)
 
     let startAngle = 0
 
     for (let i = 0; i < this.#eachAngles.length; i++) {
-      const RADIUS_TRIANGLE = 180
-      const endAngle = startAngle + this.#eachAngles[i] * Math.PI / RADIUS_TRIANGLE
+      const endAngle = this.#calcEndAngle(startAngle, this.#eachAngles[i])
 
-      /* ---------------- Each Section Coords ---------------- */
-      const x1 = centerX + radius * Math.cos(startAngle)
-      const y1 = centerY + radius * Math.sin(startAngle)
-      const x2 = centerX + radius * Math.cos(endAngle)
-      const y2 = centerY + radius * Math.sin(endAngle)
-      /* ----------------------------------------------------- */
+      const angles = {
+        startAngle,
+        endAngle
+      }
 
-      // Determine if the arc should be the larger (1) or smaller (0) arc
-      const largeArcFlag = endAngle - startAngle > Math.PI ? 1 : 0
+      const coordinates = this.#calcEachCoords(context, angles)
 
-      // path config
-      const pathData = [
-        `M ${centerX} ${centerY}`,
-        `L ${x1} ${y1}`,
-        `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
-        'Z'
-      ].join(' ')
+      const largeArcFlag = this.#calcLargeArcFlag(angles)
+
+      const pathData = this.#createPathData(context, coordinates, largeArcFlag)
 
       const path = this.#createPath(pathData, this.#visualData[i].color)
 
@@ -94,6 +80,118 @@ class CircleDiagram extends Diagram {
 
       startAngle = endAngle
     }
+  }
+
+  /**
+   * Creates a context object containing the radius and center coordinates for a circle diagram.
+   *
+   * @param {number} svgWidth - The width of the SVG element.
+   * @param {number} svgHeight - The height of the SVG element.
+   * @returns {object} - The context object with radius and center properties.
+   */
+  #createContext (svgWidth, svgHeight) {
+    const context = {
+      radius: this.#calcRadius(svgWidth, svgHeight),
+      center: this.#calcCenter(svgWidth, svgHeight)
+    }
+
+    return context
+  }
+
+  /**
+   * Calculates the radius for a circle diagram based on the SVG element's width and height.
+   *
+   * @param {number} svgWidth - The width of the SVG element.
+   * @param {number} svgHeight - The height of the SVG element.
+   * @returns {number} - The calculated radius of the circle.
+   */
+  #calcRadius (svgWidth, svgHeight) {
+    const DIVIDED = 2
+    const PADDING = 30
+
+    return Math.min(svgWidth, svgHeight) / DIVIDED - PADDING
+  }
+
+  /**
+   * Calculates the center coordinates for a circle diagram based on the SVG element's width and height.
+   *
+   * @param {number} svgWidth - The width of the SVG element.
+   * @param {number} svgHeight - The height of the SVG element.
+   * @returns {object} - The center coordinates of the circle.
+   */
+  #calcCenter (svgWidth, svgHeight) {
+    const DIVIDED = 2
+
+    const centerX = svgWidth / DIVIDED
+    const centerY = svgHeight / DIVIDED
+
+    return { centerX, centerY }
+  }
+
+  /**
+   * Calculates the end angle for a segment in a circle diagram.
+   *
+   * @param {number} startAngle - The starting angle in radians.
+   * @param {number} angle - The angle in degrees to be converted and added to the start angle.
+   * @returns {number} - The calculated end angle in radians.
+   */
+  #calcEndAngle (startAngle, angle) {
+    const RADIUS_TRIANGLE = 180
+    const endAngle = startAngle + angle * Math.PI / RADIUS_TRIANGLE
+
+    return endAngle
+  }
+
+  /**
+   * Calculates the coordinates for the start and end points of a segment in a circle diagram.
+   * !!! COPILOT HELPT ME WITH THE CALCULATIONS !!!
+   *
+   * @param {object} context - The context object containing the radius and center coordinates.
+   * @param {object} angles - The angles object containing the start and end angles in radians.
+   * @returns {object} - The coordinates object with properties x1, y1, x2, and y2.
+   */
+  #calcEachCoords (context, angles) {
+    const coords = {
+      x1: context.center.centerX + context.radius * Math.cos(angles.startAngle),
+      y1: context.center.centerY + context.radius * Math.sin(angles.startAngle),
+      x2: context.center.centerX + context.radius * Math.cos(angles.endAngle),
+      y2: context.center.centerY + context.radius * Math.sin(angles.endAngle)
+    }
+
+    return coords
+  }
+
+  /**
+   * Calculates the large-arc-flag for an SVG path element based on the given angles.
+   * !!! COPILOT HELPT ME WITH THE CALCULATIONS !!!
+   *
+   * @param {object} angles - The angles object containing the start and end angles in radians.
+   * @returns {number} - Returns 1 if the arc is greater than 180 degrees, otherwise 0.
+   */
+  #calcLargeArcFlag (angles) {
+    const largeArcFlag = angles.endAngle - angles.startAngle > Math.PI ? 1 : 0
+
+    return largeArcFlag
+  }
+
+  /**
+   * Creates the SVG path data string for a segment in a circle diagram.
+   * !!! COPILOT HELPT ME WITH THE CALCULATIONS !!!
+   *
+   * @param {object} context - The context object containing the radius and center coordinates.
+   * @param {object} coordinates - The coordinates object containing the start and end points of the segment.
+   * @param {number} largeArcFlag - The large-arc-flag for the SVG path element.
+   * @returns {string} - The SVG path data string.
+   */
+  #createPathData (context, coordinates, largeArcFlag) {
+    const pathData = [
+      `M ${context.center.centerX} ${context.center.centerY}`,
+      `L ${coordinates.x1} ${coordinates.y1}`,
+      `A ${context.radius} ${context.radius} 0 ${largeArcFlag} 1 ${coordinates.x2} ${coordinates.y2}`,
+      'Z'
+    ].join(' ')
+
+    return pathData
   }
 
   /**
@@ -133,7 +231,7 @@ class CircleDiagram extends Diagram {
    */
   #showLabels (svg) {
     const xCoord = 10
-    let yCoord = 10
+    const yCoord = 10
 
     const coords = {
       xCoord,
@@ -203,7 +301,12 @@ class CircleDiagram extends Diagram {
     return textPercent
   }
 
-
+  /**
+   * Calculate the percentage.
+   *
+   * @param {number} angle - The angle in decimal form.
+   * @returns {number} The percentage.
+   */
   #calculatePercent (angle) {
     const percentInDec = angle
     const HUNDREDPERCENT = 100
