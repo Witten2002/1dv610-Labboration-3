@@ -16,6 +16,7 @@ class GraphDiagram extends Diagram {
   #visualData
   #barValues
   #svg
+
   /**
    * Creates an instance of graph diagram.
    *
@@ -23,11 +24,39 @@ class GraphDiagram extends Diagram {
    */
   constructor (config) {
     super(config)
-    this.#dataObjects = super.getDataObject()
-    this.#visualData = super.getVisualData()
     this.#barValues = []
-    this.#svg = super.getSvg()
 
+    this.#setDataObject()
+    this.#setVisualData()
+    this.#setSvg()
+    this.#setState()
+  }
+
+  /**
+   * Sets the data object.
+   */
+  #setDataObject () {
+    this.#dataObjects = super.getDataObject()
+  }
+
+  /**
+   * Sets the visual data.
+   */
+  #setVisualData () {
+    this.#visualData = super.getVisualData()
+  }
+
+  /**
+   * Sets the svg.
+   */
+  #setSvg () {
+    this.#svg = super.getSvg()
+  }
+
+  /**
+   * Sets the state of the diagram.
+   */
+  #setState () {
     this.#setBarValues()
     this.#setMaxValue()
     this.#createAxels(this.#svg, super.getSvgWidth(), super.getSvgHeight())

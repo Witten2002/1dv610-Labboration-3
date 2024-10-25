@@ -23,8 +23,29 @@ class LineDiagram extends GraphDiagram {
    */
   constructor (config) {
     super(config)
+    this.#setDataObject()
+    this.#setSvgWidth()
+    this.#setMaxDataValue()
+  }
+
+  /**
+   * Sets the data object.
+   */
+  #setDataObject () {
     this.#dataObject = super.getDataObject()
+  }
+
+  /**
+   * Sets the width of the SVG element.
+   */
+  #setSvgWidth () {
     this.#svgWidth = super.getSvgWidth()
+  }
+
+  /**
+   * Sets the maximum data value.
+   */
+  #setMaxDataValue () {
     this.#maxDataValue = super.getMaxValue()
   }
 

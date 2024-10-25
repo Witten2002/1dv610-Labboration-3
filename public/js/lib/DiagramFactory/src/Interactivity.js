@@ -29,12 +29,55 @@ class Interactivity {
    * @param {object} element - The chart that will be used to render the diagram.
    */
   constructor (element) {
-    this.#element = element
-    this.#originalHeight = this.#toInt(this.#element.getAttribute('height'))
-    this.#originalWidth = this.#toInt(this.#element.getAttribute('width'))
+    this.#setElement(element)
+    this.#setOrigianlHeight()
+    this.#setOriginalWidth()
+    this.#setOrginalX()
+    this.#setOrginalY()
+    this.#setOrginalRadius()
+  }
 
+  /**
+   * Sets the element.
+   *
+   * @param {object} element - The element to set.
+   */
+  #setElement (element) {
+    this.#element = element
+  }
+
+  /**
+   * Sets the original height.
+   */
+  #setOrigianlHeight () {
+    this.#originalHeight = this.#toInt(this.#element.getAttribute('height'))
+  }
+
+  /**
+   * Sets the original width.
+   */
+  #setOriginalWidth () {
+    this.#originalWidth = this.#toInt(this.#element.getAttribute('width'))
+  }
+
+  /**
+   * Sets the original x position.
+   */
+  #setOrginalX () {
     this.#originalX = this.#toInt(this.#element.getAttribute('x'))
+  }
+
+  /**
+   * Sets the original y position.
+   */
+  #setOrginalY () {
     this.#originalY = this.#toInt(this.#element.getAttribute('y'))
+  }
+
+  /**
+   * Sets the original radius.
+   */
+  #setOrginalRadius () {
     this.#orginalRadius = this.#toInt(this.#element.getAttribute('r'))
   }
 

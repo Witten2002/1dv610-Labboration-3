@@ -22,27 +22,23 @@ class Diagram {
    */
   constructor (config) {
     this.#setDataObject(config)
-    this.#setSvg(this.#dataObject.getDataObject().config.svg)
-    this.#setsvgHeight(this.#dataObject.getDataObject().config.height)
-    this.#setsvgWidth(this.#dataObject.getDataObject().config.width)
+    this.#setSvg()
+    this.#setsvgHeight()
+    this.#setsvgWidth()
   }
 
   /**
    * Sets the svg element.
-   *
-   * @param {object} svg - The svg element.
    */
-  #setSvg (svg) {
-    this.#svg = svg
+  #setSvg () {
+    this.#svg = this.#dataObject.getDataObject().config.svg
   }
 
   /**
    * Sets the heigt of the element.
-   *
-   * @param {number} height - Svg Element.
    */
-  #setsvgHeight (height) {
-    this.#svgHeight = height
+  #setsvgHeight () {
+    this.#svgHeight = this.#dataObject.getDataObject().config.height
     this.#svg.setAttribute('height', this.#svgHeight)
   }
 
@@ -57,11 +53,9 @@ class Diagram {
 
   /**
    * Sets the width of the element.
-   *
-   * @param {number} width - Svg Element.
    */
-  #setsvgWidth (width) {
-    this.#svgWidth = width
+  #setsvgWidth () {
+    this.#svgWidth = this.#dataObject.getDataObject().config.width
     this.#svg.setAttribute('width', this.#svgWidth)
   }
 
@@ -90,6 +84,7 @@ class Diagram {
    */
   #setDataObject (config) {
     this.#dataObject = new DataObject(config)
+    this.#dataObject.createObject()
   }
 
   /**

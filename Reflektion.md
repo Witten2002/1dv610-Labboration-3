@@ -103,12 +103,16 @@ I denna bild visar jar klassen som skapar griden för diagrammet. Denna klass ha
 <img src="./reflektionImg/kap10.png" alt="Example Diagram" width="600">
 
 ## Kapitel 11: Systems
-Innan jag läste detta kapitel tror jag inte riktigt att jag förstod exakt vad som menades med **Dependency Injections**. Så som jag tolkar det sker detta när vi skickar object som argument instället för att instansiera ett nytt objekt. Vidare berättar Robert om **Factories** som används för att skapa upp nya instaser utav ett objekt. Men hjälpt utav en factory kan vi skapa upp nya instanser av ett objekt mycket enklare och effektivare. **Constructors must be simple** är ett stycket som jag inte följe i L2 men jag nu rättat till i L3. I L2 gjorde jag det för att jag ville automatiskt köra den metoden när jag skapade en ny instans av klassen. Men det är bättre att skapa en metod som vi får anropa istället. **Avoid duplication** är en regel som jag försöker följa så gott det går. Den handlar om att man inte ska upprepa sig. Jag tycker dock att det har varit enklare att hittat att man brutit mot denna regel på när man gör en code review. Jag gillar att efter ett projekt är klart går jag igenom filerna och kollar om jag hittar saker som jag kan förbättra. Dry brukar vara ett sådant men även att jag skapar nya mindre metoder som gör en sak. När jag nu kollar igenom min kod så ser jag att jag brutit mot reglen **Constructors must be simple** på olika ställen i L2 modulen. Jag borde egentligen ha skapat setters och anropat vissa metoder istället för att köra dem direkt i constructor. Sen har jag också velat att vissa metoder körs automatiskt när jag skapar en ny instans utav klassen. 
+Innan jag läste detta kapitel tror jag inte riktigt att jag förstod exakt vad som menades med **Dependency Injections**. Så som jag tolkar det sker detta när vi skickar object som argument instället för att instansiera ett nytt objekt. Vidare berättar Robert om **Factories** som används för att skapa upp nya instaser utav ett objekt. Men hjälpt utav en factory kan vi skapa upp nya instanser av ett objekt mycket enklare och effektivare. **Constructors must be simple** är ett stycket som jag inte följe i L2 men jag nu rättat till i L3. I L2 gjorde jag det för att jag ville automatiskt köra den metoden när jag skapade en ny instans av klassen. Men det är bättre att skapa en metod som vi får anropa istället. **Avoid duplication** är en regel som jag försöker följa så gott det går. Den handlar om att man inte ska upprepa sig. Jag tycker dock att det har varit enklare att hittat att man brutit mot denna regel på när man gör en code review. Jag gillar att efter ett projekt är klart går jag igenom filerna och kollar om jag hittar saker som jag kan förbättra. Dry brukar vara ett sådant men även att jag skapar nya mindre metoder som gör en sak. 
 
-### Exempel: ***DiagramFactory.js***
-Här visar jag när jag bryter mot reglen **Constructors must be simple**. Jag borde ha skapat en metod som jag anropar istället för att köra metoden direkt i constructor.
+### Exempel: ***GraphDiagram.js***
+Här visar jag när jag bryter mot reglen **Constructors must be simple**. I andra bilden visar jag hur jag har refaktoriserat koden  för att försöka följa regeln.
 
 Dåligt:
 
 <img src="./reflektionImg/kap11BAD.png" alt="Example Diagram" width="600">
+
+Bra: 
+
+<img src="./reflektionImg/kap11GOOD.png" alt="Example Diagram" width="600">
 

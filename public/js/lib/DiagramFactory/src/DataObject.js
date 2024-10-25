@@ -47,9 +47,6 @@ class DataObject {
     this.#setYAxelFontSize(this.#height)
     this.#setShowGrid(config.decoration)
     /* ---------------------------- */
-
-    // This must be done last
-    this.#createObject()
   }
 
   /**
@@ -398,7 +395,7 @@ class DataObject {
   /**
    * Creates the object.
    */
-  #createObject () {
+  createObject () {
     this.#dataObject = {
       config: {
         elementId: this.#elementId,

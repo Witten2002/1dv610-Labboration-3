@@ -22,11 +22,24 @@ class CircleDiagram extends Diagram {
    */
   constructor (config) {
     super(config)
-    this.#dataObject = super.getDataObject()
-    this.#visualData = super.getVisualData()
-
     this.#eachPrecents = []
     this.#eachAngles = []
+    this.#setDataObject()
+    this.#setVisualData()
+  }
+
+  /**
+   * Sets the data object.
+   */
+  #setDataObject () {
+    this.#dataObject = super.getDataObject()
+  }
+
+  /**
+   * Sets the visual data.
+   */
+  #setVisualData () {
+    this.#visualData = super.getVisualData()
   }
 
   /**

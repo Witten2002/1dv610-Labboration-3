@@ -27,13 +27,62 @@ class HorizontalBarDiagram extends GraphDiagram {
    */
   constructor (config) {
     super(config)
-    this.#dataObject = super.getDataObject()
-    this.#svg = super.getSvg()
-    this.#barWidth = this.#dataObject.config.barWidth
-    this.#barSpacing = this.#dataObject.config.barSpacing
-    this.#svgHeight = super.getSvgHeight()
-    this.#maxDataValue = super.getMaxValue()
     this.#xCoodinates = []
+    this.#setDataObject()
+    this.#setSvg()
+    this.#setBarWidth()
+    this.#setBarSpacing()
+    this.#setSvgHeight()
+    this.#setMaxDataValue()
+    this.#setVisualData()
+  }
+
+  /**
+   * Sets the data object.
+   */
+  #setDataObject () {
+    this.#dataObject = super.getDataObject()
+  }
+
+  /**
+   * Sets the SVG.
+   */
+  #setSvg () {
+    this.#svg = super.getSvg()
+  }
+
+  /**
+   * Sets the width of the bars.
+   */
+  #setBarWidth () {
+    this.#barWidth = this.#dataObject.config.barWidth
+  }
+
+  /**
+   * Sets the spacing between the bars.
+   */
+  #setBarSpacing () {
+    this.#barSpacing = this.#dataObject.config.barSpacing
+  }
+
+  /**
+   * Sets the height of the SVG element.
+   */
+  #setSvgHeight () {
+    this.#svgHeight = super.getSvgHeight()
+  }
+
+  /**
+   * Sets the maximum data value.
+   */
+  #setMaxDataValue () {
+    this.#maxDataValue = super.getMaxValue()
+  }
+
+  /**
+   * Sets the visual data.
+   */
+  #setVisualData () {
     this.#visualData = super.getVisualData()
   }
 

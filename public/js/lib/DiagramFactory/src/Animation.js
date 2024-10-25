@@ -19,6 +19,15 @@ class Animation {
    * @param {object} element - The chart that will be used to render the diagram.
    */
   constructor (element) {
+    this.#setElement(element)
+  }
+
+  /**
+   * Sets the element.
+   *
+   * @param {object} element - The element to set.
+   */
+  #setElement (element) {
     this.#element = element
   }
 
