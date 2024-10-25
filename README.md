@@ -32,9 +32,6 @@ DiagramFactory is a web-based application that allows users to create, edit, and
 - The saved diagrams dont have the ability to be interactive and animated when downloaded as an SVG file.
 - The application is not optimized for mobile devices and may not display correctly on smaller screens.
 
-## Unimplemented Features
-- We can add a new input and then remove it from the diagram however we ar not yet able to to remove the new input component from the input list. I mean after we klick in the button *Add new input* there appears a new row where we can input data. There is currently no way to remove the row again. But we can delete the data from the diagram by pressing *Remove*.
-
 ## Installation on server
 #### Requirements:
 - Node.js [GUIDE](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
