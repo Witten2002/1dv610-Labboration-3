@@ -101,41 +101,4 @@ export class DiagramController {
     const prepairData = new PrepairData(data)
     return prepairData.getPrepairedData()
   }
-
-  // /**
-  //  * Prepares data for the diagram.
-  //  *
-  //  * @param {Array<object>} data - The raw data to be prepared.
-  //  * @returns {Array<object>} The prepared data array for the diagram.
-  //  */
-  // async #prepareData (data) {
-  //   const dataArray = []
-  //   const colors = ['red', 'blue', 'yellow', 'orange', 'green']
-
-  //   for (let i = 0; i < data.length; i++) {
-  //     const diagramDataPoint = {
-  //       label: data[i].calendarYear,
-  //       value: this.#toBillions(data[i].revenue),
-  //       color: colors[i]
-  //     }
-
-  //     dataArray.push(diagramDataPoint)
-  //   }
-
-  //   return dataArray.reverse()
-  // }
-
-  // /**
-  //  * Will calculate the revenue into billions.
-  //  *
-  //  * @param {number} revenue The reveneu of the company per year.
-  //  * @returns {number} The revenue in billions.
-  //  */
-  // #toBillions (revenue) {
-  //   const BILLION = 1000000000
-
-  //   const reveneuInNewFormat = revenue / BILLION
-
-  //   return reveneuInNewFormat
-  // }
 }
