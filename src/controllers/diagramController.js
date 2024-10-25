@@ -8,6 +8,7 @@
 import { PATH, VIEWS } from '../config/Paths.js'
 import { DIAGRAM_TYPES } from '../config/DiagramTypes.js'
 import { FinanceFetcher } from '../models/FinanceFetcher.js'
+import { PrepairData } from '../models/PrepairData.js'
 
 /**
  * Encapsulates a controller.
@@ -24,7 +25,7 @@ export class DiagramController {
   async horizontalBar (req, res, next) {
     const unPrePairedData = await this.#getData()
 
-    const preparedData = await this.#prepareData(unPrePairedData)
+    const preparedData = await this.#getPrepareData(unPrePairedData)
     const sendToView = {
       data: preparedData
     }
@@ -45,7 +46,7 @@ export class DiagramController {
   async linediagram (req, res, next) {
     const unPrePairedData = await this.#getData()
 
-    const preparedData = await this.#prepareData(unPrePairedData)
+    const preparedData = await this.#getPrepareData(unPrePairedData)
     const sendToView = {
       data: preparedData
     }
@@ -65,7 +66,7 @@ export class DiagramController {
   async circlediagram (req, res, next) {
     const unPrePairedData = await this.#getData()
 
-    const preparedData = await this.#prepareData(unPrePairedData)
+    const preparedData = await this.#getPrepareData(unPrePairedData)
     const sendToView = {
       data: preparedData
     }
@@ -96,34 +97,45 @@ export class DiagramController {
    * @param {Array<object>} data - The raw data to be prepared.
    * @returns {Array<object>} The prepared data array for the diagram.
    */
-  async #prepareData (data) {
-    const dataArray = []
-    const colors = ['red', 'blue', 'yellow', 'orange', 'green']
-
-    for (let i = 0; i < data.length; i++) {
-      const diagramDataPoint = {
-        label: data[i].calendarYear,
-        value: this.#toBillions(data[i].revenue),
-        color: colors[i]
-      }
-
-      dataArray.push(diagramDataPoint)
-    }
-
-    return dataArray.reverse()
+  async #getPrepareData (data) {
+    const prepairData = new PrepairData(data)
+    return prepairData.getPrepairedData()
   }
 
-  /**
-   * Will calculate the revenue into billions.
-   *
-   * @param {number} revenue The reveneu of the company per year.
-   * @returns {number} The revenue in billions.
-   */
-  #toBillions (revenue) {
-    const BILLION = 1000000000
+  // /**
+  //  * Prepares data for the diagram.
+  //  *
+  //  * @param {Array<object>} data - The raw data to be prepared.
+  //  * @returns {Array<object>} The prepared data array for the diagram.
+  //  */
+  // async #prepareData (data) {
+  //   const dataArray = []
+  //   const colors = ['red', 'blue', 'yellow', 'orange', 'green']
 
-    const reveneuInNewFormat = revenue / BILLION
+  //   for (let i = 0; i < data.length; i++) {
+  //     const diagramDataPoint = {
+  //       label: data[i].calendarYear,
+  //       value: this.#toBillions(data[i].revenue),
+  //       color: colors[i]
+  //     }
 
-    return reveneuInNewFormat
-  }
+  //     dataArray.push(diagramDataPoint)
+  //   }
+
+  //   return dataArray.reverse()
+  // }
+
+  // /**
+  //  * Will calculate the revenue into billions.
+  //  *
+  //  * @param {number} revenue The reveneu of the company per year.
+  //  * @returns {number} The revenue in billions.
+  //  */
+  // #toBillions (revenue) {
+  //   const BILLION = 1000000000
+
+  //   const reveneuInNewFormat = revenue / BILLION
+
+  //   return reveneuInNewFormat
+  // }
 }

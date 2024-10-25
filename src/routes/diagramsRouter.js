@@ -19,6 +19,4 @@ router.get(ROUTER_PATH.LINEDIAGRAM, (req, res, next) => controller.linediagram(r
 
 router.get(ROUTER_PATH.CIRCLEDIAGRAM, (req, res, next) => controller.circlediagram(req, res, next))
 
-console.log()
-
 export { router }
